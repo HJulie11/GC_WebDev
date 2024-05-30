@@ -20,6 +20,7 @@ module.exports = {
           30: '#7B7B7B',
           50: '#585858',
           90: '#141414',
+          light: '#E5E5E5',
         },
         orange: {
           50: '#FF814C',
@@ -37,8 +38,9 @@ module.exports = {
           1: '#FF5A5F',
         },
         purple: {
-          1: '#8884d8',
-          2: '#6b66b1'
+          heavy: '#2622F6',
+          light: '#ADADFF',
+          middle: '#7575FF'
         }
       },
       backgroundImage: {

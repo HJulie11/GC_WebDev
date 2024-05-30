@@ -54,7 +54,6 @@ const Navbar = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
               <div className="regular-16 mt-3 flexCenter cursor-pointer pb-1.5 transition-all hover:font-bold">
                 <DropdownButton buttonText="My Account" items={[
                   { label: 'Profile', href:'/profile' },
-                  { label: 'My Bins', href: '/home' },
                   { label: 'Log out', href: '/logout' }
                 ]}
               />
@@ -62,7 +61,7 @@ const Navbar = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
             ) : (
               <div className="lg:flexCenter hidden mt-3">
                 <Link href="/login">
-                  {/* <Button type="button" title="Login" variant="btn_dark_green" /> */}
+                  <button type="button" title="Login" className="bg-gray-light hover:bg-purple-middle" />
                 </Link>
               </div>
             )}

@@ -36,6 +36,22 @@
   font-style: italic;
 }
 
+@font-face {
+  font-family: 'Avenir';
+  src: url('../public/fonts/AvenirNextLTPro-UltLt.otf') format('opentype');
+  font-weight: light;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Avenir';
+  src: url('../public/fonts/AvenirNextLTPro-Demi.otf') format('opentype');
+  font-weight: semi-bold;
+  font-style: normal;
+}
+
+
+
 /* :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
