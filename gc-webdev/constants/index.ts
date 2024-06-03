@@ -7,8 +7,8 @@ import LandfillIcon from '@/public/landfill.png'
 export const NAV_LINKS = [
   { href: '/', key: 'home', label: 'Home' },
   { href: '/', key: '캘린더', label: '캘린더' },
-  { href: '/', key: '나의 오디오', label: '나의 오디오' },
-  { href: '/', key: '뉴스', label: '뉴스' },
+  { href: '/my_audio', key: '나의 오디오', label: '나의 오디오' },
+  { href: '/news_page', key: '뉴스', label: '뉴스' },
   
 ];
 

@@ -2,11 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
+/* * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-}
+} */
 
 @font-face {
   font-family: 'Avenir';
@@ -24,8 +24,8 @@
 
 @font-face {
   font-family: 'Avenir';
-  src: url('../public/fonts/AvenirNextLTPro-Regular.otf') format('opentype');
-  font-weight: normal;
+  src: url('../public/fonts/AvenirNextLTPro-Demi.otf') format('opentype');
+  font-weight: 600px;
   font-style: normal;
 }
 
@@ -45,8 +45,15 @@
 
 @font-face {
   font-family: 'Avenir';
-  src: url('../public/fonts/AvenirNextLTPro-Demi.otf') format('opentype');
-  font-weight: semi-bold;
+  src: url('../public/fonts/AvenirNextLTPro-MediumCn.otf') format('opentype');
+  font-weight: medium;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Avenir';
+  src: url('../public/fonts/AvenirNextLTPro-Regular.otf') format('opentype');
+  font-weight: normal;
   font-style: normal;
 }
 
@@ -67,7 +74,10 @@
 } */
 
 body {
-  font-family: 'Avenir';
+  font-family: 'Avenir', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 @layer utilities {
@@ -112,7 +122,7 @@ body {
   }
 
   /* FONTS */
-  .regular-64 {
+  /* .regular-64 {
     @apply text-[64px] font-[400] leading-[120%];
   }
 
@@ -178,7 +188,7 @@ body {
 
   .bold-16 {
     @apply text-[16px] font-[700];
-  }
+  } */
 
   /* Hero */
   .hero-map {
