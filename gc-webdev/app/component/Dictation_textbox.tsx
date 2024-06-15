@@ -9,7 +9,7 @@ const Dictation_textbox = () => {
   };
 
   return (
-    <input className='w-[60%] h-full rounded-lg border-2 border-grey-30' type="text" value={value} onChange={handleChange} placeholder="Enter text here"/>
+    <textarea className='w-[50%] h-[70%] rounded-lg border-2 border-grey-30' value={value} onChange={handleChange} placeholder="Enter text here"/>
   )
 }
 

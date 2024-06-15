@@ -19,7 +19,17 @@ const Button = ({ type, title, icon, variant, full}: ButtonProps) => {
   //   router.push(link_to)
   // }
   return (
-    <button className={`flexCenter gap-3 rounded-full border ${variant} ${full && 'w-full'}`} type={type}>
+    <button  style={{
+      display: 'flex',
+      width: '170px',
+      height: '50px',
+      padding: '12px 39px 13px 40px',
+      justifyContent: 'center',
+      alignItems: 'center',
+      flexShrink: 0,
+      borderRadius: '10px',
+      background: '#8E8E8E'
+    }} className={`mt-60 ml-20 flexCenter gap-3 rounded-full border ${variant} ${full && 'w-full'}`} type={type}>
       {icon && <Image src={icon} alt={title} width={24} height={24} />}
       <label className="bold-16 whitespace-nowrap cursor-pointer">{title}</label>
     </button>
