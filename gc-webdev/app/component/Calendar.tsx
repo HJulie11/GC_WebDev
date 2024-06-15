@@ -21,7 +21,9 @@ interface Progress {
 const Calendar: React.FC = () => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [progress, setProgress] = useState<Progress>({});
+  const [progress, setProgress] = useState<Progress>({
+    '2024-06-01': 'Audio title Completed'
+  });
 
   const renderHeader = () => {
     const dateFormat = 'MMMM yyyy';
@@ -90,7 +92,7 @@ const Calendar: React.FC = () => {
             onClick={() => onDateClick(cloneDay)}
           >
             <span className="number">{formattedDate}</span>
-            <div className="progress">{progress[dateKey] || ''}</div>
+            <div className="progress ">{progress[dateKey] || ''}</div>
           </div>
         );
         day = addDays(day, 1);

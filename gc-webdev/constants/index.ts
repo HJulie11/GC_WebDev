@@ -63,9 +63,9 @@ export const FOOTER_LINKS = [
       'Contact Us'
     ],
     urls: [
-      '/about-us',
-      '/how-it-works',
-      '/contact-us'
+      '/캘린더',
+      '/나의 오디오',
+      '/뉴스'
     ]
   }
 ];
@@ -73,7 +73,7 @@ export const FOOTER_LINKS = [
 export const FOOTER_CONTACT_INFO = {
   title: 'Contact Us',
   links: [
-    { label: 'Email', value: 'recycled.sdp@gmail.com' },
+    { label: 'Email', value: 'gyeong.cheong23@gmail.com' },
   ],
 };
 
