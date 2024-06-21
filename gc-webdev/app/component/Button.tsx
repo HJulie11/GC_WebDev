@@ -1,5 +1,6 @@
 "use client"
 import Image, { StaticImageData } from "next/image";
+import { ReactNode } from "react";
 import Link from "next/link";
 import router, { useRouter } from "next/navigation";
 import { MouseEventHandler } from "react";

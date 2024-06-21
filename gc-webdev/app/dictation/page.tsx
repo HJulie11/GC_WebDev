@@ -11,20 +11,7 @@ const DictationPage = () => {
             <Dictation_textbox />
             <div className='flex flex-col w-[40%] h-full ml-5'>
             <Card title='dummytitle' url="/dictation" thumbnail='dummyurl' />
-            <Link href="/correction">
-              {/* <button style={{
-                display: 'flex',
-                width: '170px',
-                height: '50px',
-                padding: '12px 39px 13px 40px',
-                justifyContent: 'center',
-                alignItems: 'center',
-                flexShrink: 0,
-                borderRadius: '10px',
-                background: '#8E8E8E'
-              }} className='mt-60 ml-20'>제출하기</button> */}
-              <Button type='button' title='제출하기' variant='bg-gray-30' full={false} />
-            </Link>
+              <Button type='button' title={<Link href="/correction">제출하기</Link>} variant='bg-gray-30' full={false} />
             </div>
         </div>
     </>
