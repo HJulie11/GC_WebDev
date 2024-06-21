@@ -1,12 +1,13 @@
 import React from 'react'
 import Profile from '../component/Profile'
+import MainLayout from '../component/MainLayout'
 
-const page = () => {
+const ProfilePage = () => {
   return (
-    <>
-    <Profile />
-    </>
+    <MainLayout>
+      <Profile />
+    </MainLayout>
   )
 }
 
-export default page
+export default ProfilePage

@@ -1,25 +1,27 @@
-
-'use client'
-import { motion } from 'framer-motion'
-
+"use client"
+// Import your layout page
+import React from 'react';
+import { LayoutProvider } from './LayoutProvider'
 import './globals.css'
-import Navbar from './component/Navbar'
-import Footer from './component/Footer'
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
+export default function RootLayout({ 
+    children 
+}: { 
+    children: React.ReactNode 
 }) {
-  return (
-    <html lang="en">
-      <body>
-        <Navbar isLoggedIn={true} />
-        <motion.main className="relative overflow-hidden">
-          {children}
-        </motion.main>
-        <Footer />
-      </body>
+    const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+
+     // Simulate a login action
+     const handleLogin = () => {
+         setIsLoggedIn(true);
+     };
+     return (
+     <html lang="en">
+        <body>
+            <LayoutProvider>
+                {children}
+            </LayoutProvider>
+        </body>
     </html>
   )
 }
