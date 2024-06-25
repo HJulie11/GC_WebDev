@@ -6,7 +6,7 @@ import Link from 'next/link'
 const DictationPage = () => {
   return (
     <>
-        <div className='flex flex-row p-40 h-screen'>
+        <div className='flex flex-row p-20 h-screen'>
             <Dictation_textbox />
             <div className='flex flex-col w-[40%] h-full px-5 center items-center justify-center'>
               <Card title='dummytitle' url="/dictation" thumbnail='dummyurl' />
