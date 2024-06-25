@@ -1,0 +1,43 @@
+adminaccount component
+
+<div>
+                        <div className='mt-0 ml-0 text-[25px] text-bold text-purple-heavy'>
+                            개인정보 {/** Translation: Personal Information */}
+                        </div>
+                        <div className='flex flex-row mt-5 ml-5 text-[18px]'>
+                            <div className='flex flex-col w-[30%] ml-0'>
+                                <div className='mb-5'>기관 이름{/** Name */}</div>
+                                <div className='mb-5'>담당자/대표 이름{/** person in charge name */}</div>
+                                <div className='mb-5'>이메일 {/** Email address */}</div>
+                                <div className='mb-5'>담당자 전화번호 {/** Phone number (person in charge)*/}</div>
+                            </div>
+                            <div className='flex flex-col w-[70%] ml-0'>
+                                <div className='mb-5'>메이플어학원</div>
+                                <div className='mb-5'>홍길동</div>
+                                <div className='mb-5'>abcd@gmail.com</div>
+                                <div className='mb-5'>010-1234-5678</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div className='mt-10 ml-0 text-[25px] text-bold text-purple-heavy'>
+                            이용 정보 {/** Translation: Usage Information */}
+                        </div>
+                        <div className='flex flex-row mt-5 ml-5 text-[18px]'>
+                            <div className='flex flex-col w-[30%] ml-0'>
+                                <div className='mb-5'>가입 일자{/** Name */}</div>
+                                <div className='flex flex-row mb-5'>
+                                    <div> 가입 학생 수 </div> {/** number of student registered */}
+                                    <a className='ml-2 text-gray-20 text-[10px] bottom-0' href='/studentadmin'> ▶︎ 학생 관리 바로가기 {/* go to student admin page */} </a>
+                                </div>
+                                <div className='mb-5'>담당자 이름 {/** Phone number */}</div>
+                                <div className='mb-5'>담당자 전화번호 {/** Phone number */}</div>
+                            </div>
+                            <div className='flex flex-col w-[70%] ml-0'>
+                                <div className='mb-5'>yyyy.mm.dd</div>
+                                <div className='mb-5'>abcd@gmail.com</div>
+                                <div className='mb-5'>홍길동</div>
+                                <div className='mb-5'>010-1234-5678</div>
+                            </div>
+                        </div>
+                    </div>

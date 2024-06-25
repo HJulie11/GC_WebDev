@@ -12,6 +12,13 @@ export const NAV_LINKS = [
   
 ];
 
+export const ADMIN_NAV_LINKS = [
+  { href: '/adminhome', key: 'home', label: '🏠' },
+  { href: '/studentadmin', key: '학생 관리', label: '학생 관리' },
+  { href: '/adminaccount', key: '관리자 계정', label: '계정 정보' },
+  
+];
+
 // CAMP SECTION
 export const PEOPLE_URL = [
   '/person-1.png',

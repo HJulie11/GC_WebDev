@@ -1,14 +1,24 @@
+"use client"
 import React from 'react'
-import AdminLayout from './layout'
+import AdminNavbar from '../component/AdminNavbar'
+import AdminFooter from '../component/AdminFooter'
+import AdminHomeComponent from '../component/AdminHome'
 
 const AdminHome = () => {
-    return (
-        <div className='flex flex-col center justify-center items-center'>
-            관리자 페이지 {/* translation: Admin Page */}
-        </div>
-    )
-}
+    const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 
-AdminHome.getLayout = (page: any) => page;
+    // Simulate a login action
+    const handleLogin = () => {
+        setIsLoggedIn(true);
+    };
+
+    return (
+        <>
+        <AdminNavbar isLoggedIn={isLoggedIn} />
+        <AdminHomeComponent />
+        <AdminFooter />
+        </>
+)
+}
 
 export default AdminHome;
