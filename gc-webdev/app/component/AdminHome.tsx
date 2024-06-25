@@ -2,7 +2,7 @@ import React from 'react'
 
 const AdminHome = () => {
   return (
-    <div className='flex flex-col center items-center justify-center h-[500px]'>
+    <div className='flex flex-col center items-center justify-center h-screen'>
         <h1 className='text-4xl font-bold text-purple-heavy mb-2'>Admin Home</h1>
         <p className='text-[23px] text-gray-30'>관리자 홈</p>
 
