@@ -9,8 +9,4 @@ const LogInPage = () => {
     )
 }
 
-// LogInPage.getLayout = function getLayout(page: any){
-//     return <LogInLayout>{page}</LogInLayout>;
-// }
-
 export default LogInPage;
