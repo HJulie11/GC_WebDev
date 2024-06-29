@@ -11,10 +11,10 @@ const AdminRegister = () => {
         confirmPassword: '',
         address: '', //기관 주소 {/* Institution address */}
         institute_name: '', //기관명 {/* Institution name */}
-        mobile_number: '', //담당자 연락처 {/* Manager's contact number */}
+        mobileNumber: '', //담당자 연락처 {/* Manager's contact number */}
         // admin_type: '', //관리자 유형 {/* Administrator type - two types for different access */}
-        register_students: null, //등록 학생 {/* registered students */}
-        register_admins: null, //그룹 관리자 등록 {/* admins for each group registered */}
+        registerStudents: null, //등록 학생 {/* registered students */}
+        registerAdmins: null, //그룹 관리자 등록 {/* admins for each group registered */}
     });
 
     const handleChange = (e : any) => {
@@ -60,11 +60,11 @@ const AdminRegister = () => {
         e.preventDefault();
         // Handle form submission
         console.log(formData);
-        if (formData.register_students) {
-            console.log('register_students:', formData.register_students);
+        if (formData.registerStudents) {
+            console.log('register_students:', formData.registerStudents);
         } 
-        if (formData.register_admins) {
-            console.log('register_admins:', formData.register_admins);
+        if (formData.registerAdmins) {
+            console.log('register_admins:', formData.registerAdmins);
         }
 
     };
@@ -120,19 +120,19 @@ const AdminRegister = () => {
                                 className="appearance-none border-1 shadow-sm w-full rounded py-2 px-3 text-gray-90 leading-tight focus:outline-none focus:shadow-outline"
                             />
                         </div>
-                        <div className='w-[50%] px-5'> {/* 전화번호 */}
+                        <div className="w-[50%] px-5">
                             <label className="block text-[18px] mb-2" htmlFor="mobileNumber">
                                 전화번호 {/*mobile number*/}
                                 <span className="text-sm text-gray-20"> (01012345678 형태로 기입 - 번호만 기입) {/* only numbers */}</span>
                             </label>
                             <input
                                 id="mobileNumber"
-                                name="confirmPassword"
-                                type="password"
-                                value={formData.confirmPassword}
+                                name="mobileNumber"
+                                type="mobileNumber"
+                                value={formData.mobileNumber}
                                 onChange={handleChange}
                                 required
-                                className="appearance-none border-1 shadow-sm w-full rounded py-2 px-3 text-gray-90 leading-tight focus:outline-none focus:shadow-outline"
+                                className="appearance-none border-1 shadow-sm rounded w-full py-2 px-3 text-gray-90 leading-tight focus:outline-none focus:shadow-outline"
                             />
                         </div>
                     </div>

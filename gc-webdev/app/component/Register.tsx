@@ -170,7 +170,7 @@ const Register = () => {
                         <input
                             id="mobileNumber"
                             name="mobileNumber"
-                            type="password"
+                            type="mobileNumber"
                             value={formData.mobileNumber}
                             onChange={handleChange}
                             required
