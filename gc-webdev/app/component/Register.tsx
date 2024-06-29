@@ -8,6 +8,8 @@ const Register = () => {
         email: '',
         password: '',
         confirmPassword: '',
+        dateOfBirth: '',
+        mobileNumber: '',
         gender: '',
         address: '',
     });
@@ -52,7 +54,7 @@ const Register = () => {
     return (
         <div className="flex items-center justify-center w-screen mt-[7rem] mb-[7rem]">
             <div className="flex flex-col w-[60%]">
-                <h2 className="text-4xl font-bold mb-6 text-center text-purple-heavy">회원가입</h2>
+                <h2 className="text-4xl font-bold mb-[4rem] text-center text-purple-heavy">회원가입</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="ml-0 mb-4">
                         <label className="block text-[18px] mb-2" htmlFor="name">
@@ -117,9 +119,9 @@ const Register = () => {
                         </label>
                         <input
                             id="dateOfBirth"
-                            name="confirmPassword"
+                            name="dateOfBirth"
                             type="password"
-                            value={formData.confirmPassword}
+                            value={formData.dateOfBirth}
                             onChange={handleChange}
                             required
                             className="appearance-none border-1 shadow-sm rounded w-[40%] py-2 px-3 text-gray-90 leading-tight focus:outline-none focus:shadow-outline"
@@ -167,9 +169,9 @@ const Register = () => {
                         </label>
                         <input
                             id="mobileNumber"
-                            name="confirmPassword"
+                            name="mobileNumber"
                             type="password"
-                            value={formData.confirmPassword}
+                            value={formData.mobileNumber}
                             onChange={handleChange}
                             required
                             className="appearance-none border-1 shadow-sm rounded w-[40%] py-2 px-3 text-gray-90 leading-tight focus:outline-none focus:shadow-outline"
