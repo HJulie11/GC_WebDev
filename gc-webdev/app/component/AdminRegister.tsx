@@ -41,7 +41,7 @@ const AdminRegister = () => {
             fullAddress += (extraAddress !== '' ? ` (${extraAddress})` : '');
         }
 
-        setForm({
+        setFormData({
             ...formData,
             address: fullAddress,
         });
@@ -49,17 +49,35 @@ const AdminRegister = () => {
     };
 
     const handleFileLoad = (data: any) => {
-        setForm({
-          ...formData,
-          register_students: data,
-          register_admins: data,
-        });
+            setFormData({
+                ...formData,
+                registerStudents: data,
+                registerAdmins: data,
+            });
     };
 
-    const handleSubmit = (e : any) => {
+    const handleSubmit = async (e : any) => {
         e.preventDefault();
         // Handle form submission
         console.log(formData);
+        // try {
+        //     const response = await fetch('/api/register', {
+        //         method: 'POST',
+        //         headers: {
+        //           'Content-Type': 'application/json',
+        //         },
+        //         body: JSON.stringify(formData),
+        //     });
+        //     if (response.ok) {
+        //         // Handle successful registration
+        //         console.log('Registration successful');
+        //     } else {
+        //         // Handle error
+        //         console.error('Registration failed');
+        //     }
+        // } catch (error) {
+
+        // }
         if (formData.registerStudents) {
             console.log('register_students:', formData.registerStudents);
         } 
@@ -194,7 +212,7 @@ const AdminRegister = () => {
                         <label className="block text-[18px] mb-2" htmlFor="register_admins">그룹별 관리자 등록하기: <span className='text-[15px] text-gray-20'> 그룹별 관리자 정보를 업로드하려면 CSV 파일을 업로드하십시오. {/* Upload a CSV file to upload student information. */}</span></label>
                         <CSVReader onFileLoaded={handleFileLoad} />
                     </div>
-                    <div className="mt-6">
+                    <div className="mt-10 mb-6">
                         <button
                             type="submit"
                             className="bg-purple-heavy text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
@@ -209,7 +227,3 @@ const AdminRegister = () => {
 }
 
 export default AdminRegister
-
-function setForm(arg0: any) {
-    throw new Error('Function not implemented.');
-}

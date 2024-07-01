@@ -197,7 +197,7 @@ const Register = () => {
                                 style={{ width: '100%', height: '400px' }}
                         />
                         )}
-                    <div className="mb-6">
+                    <div className="mt-10 mb-6">
                         <button
                             type="submit"
                             className="bg-purple-heavy text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
