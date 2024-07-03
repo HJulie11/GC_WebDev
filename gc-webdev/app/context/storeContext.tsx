@@ -4,7 +4,7 @@ import { createContext, useEffect, useState} from 'react';
 
 export const storeContext = createContext<any>({});
 
-const storeContextProvider = (props : any) => {
+const StoreContextProvider = (props : any) => {
 
     const url = 'http://localhost:4000'
     const [token, setToken] = useState("")
@@ -20,4 +20,4 @@ const storeContextProvider = (props : any) => {
   )
 }
 
-export default storeContextProvider;
+export default StoreContextProvider;
