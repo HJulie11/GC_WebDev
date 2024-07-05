@@ -1,5 +1,6 @@
 "use client"
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { storeContext } from "../context/storeContext";
 import { NAV_LINKS } from "@/constants";
 import Image from "next/image";
 import Link from "next/link";
@@ -7,13 +8,23 @@ import Button from "./Button";
 import Logo from "@/public/Logo.svg";
 import MenuBars from "@/public/menu.svg";
 import DropdownButton from "./DropdownButton";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
   const [isNavVisible, setIsNavVisible] = useState(false);
+  const { token, setToken } = useContext(storeContext);
 
   const toggleNav = () => {
     setIsNavVisible(!isNavVisible);
   };
+
+  const navigate = useNavigate();
+
+  const logout = () => {
+    localStorage.removeItem("token");
+    setToken("");
+    navigate('/')
+  }
 
   return (
     <>
@@ -58,24 +69,25 @@ const Navbar = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
               </a>
             ))}
 
-            {isLoggedIn ? (
-                    <div className="regular-16 mt-3 flexCenter cursor-pointer pb-1.5 transition-all hover:font-bold">
-                      <DropdownButton 
-                      buttonText="My Account" 
-                      items={[
-                        { label: 'Profile', href:'/profile' },
-                        { label: 'Log out', href: '/logout' }
-                      ]}
-                    />
-                      </div>
+            {!token? (
+                <div className="regular-16 mt-3 flexCenter cursor-pointer pb-1.5 transition-all hover:font-bold">
+                  <DropdownButton 
+                    buttonText="My Account" 
+                    items={[
+                      { label: 'Profile', href:'/profile' },
+                      { label: 'Log out', href: '/logout' }
+                    ]}
+                  />
+                </div>
 
-                    ) : (
-                      <div className="lg:flexCenter hidden">
-                        <Link href="/login">
-                          <Button type="button" title="Login" variant="btn_dark_green" />
-                        </Link>
-                      </div>
-                    )}
+              ) : (
+                <div className="lg:flexCenter hidden">
+                  <Link href="/login">
+                    <Button type="button" title="Login" variant="btn_dark_green"/>
+                  </Link>
+                </div>
+              )
+            }
           </ul>
         </div>
 

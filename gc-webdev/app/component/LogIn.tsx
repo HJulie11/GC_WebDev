@@ -1,16 +1,17 @@
 // LogIn.tsx
 "use client"
 import Link from 'next/link'
-import { useContext, useState, ChangeEvent, FormEvent } from 'react'
+import { useContext, useEffect, useState, ChangeEvent, FormEvent } from 'react'
 import { storeContext } from '../context/storeContext'
-import { usePathname, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import axios from 'axios'
 
 interface LogInProps {
     setEmail: React.Dispatch<React.SetStateAction<string>>;
+    setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const LogIn: React.FC<LogInProps> = ({ setEmail }) => {
+const LogIn: React.FC<LogInProps> = ({ setIsLoggedIn, setEmail }) => {
     const { url, setToken } = useContext(storeContext)
     const router = useRouter()
     const [currState, setCurrState] = useState('로그인')
@@ -19,7 +20,7 @@ const LogIn: React.FC<LogInProps> = ({ setEmail }) => {
         password: ""
     });
     const [error, setError] = useState('')
-    const [loginSuccess, setLoginSuccess] = useState(false)
+    // const [loginSuccess, setLoginSuccess] = useState(false)
 
     const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
         const name = event.target.name;
@@ -42,6 +43,7 @@ const LogIn: React.FC<LogInProps> = ({ setEmail }) => {
                 setEmail(data.email)
                 localStorage.setItem('email', data.email)
                 router.push('/')
+                setIsLoggedIn(false);
             } else {
                 alert(response.data.message)
             }
@@ -56,6 +58,13 @@ const LogIn: React.FC<LogInProps> = ({ setEmail }) => {
             console.error('Login error:', error)
         }
     }
+
+    useEffect(() => {
+        setData({
+            email: "",
+            password: ""
+        });
+    }, [currState]);
 
     return (
         <div className='flex flex-col center items-center justify-center h-[500px]'>
@@ -96,7 +105,7 @@ const LogIn: React.FC<LogInProps> = ({ setEmail }) => {
                     <Link href="/register">
                         <p className='text-sm text-center mr-10 underline text-grey-light'>회원가입</p>
                     </Link>
-                    <Link href="adminlogin">
+                    <Link href="/adminlogin">
                         <p className='text-sm text-center underline text-grey-light'>관리자 로그인</p>
                     </Link>
                 </div>

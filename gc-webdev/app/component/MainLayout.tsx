@@ -18,7 +18,7 @@ export default function MainLayout({children}: {children: React.ReactNode}) {
     <html>
       <body>
         <div>
-          <Navbar isLoggedIn={isLoggedIn} />
+          <Navbar isLoggedIn={isLoggedIn}/>
           <main>{children}</main>
           <Footer />
         </div>
