@@ -8,7 +8,8 @@ import Button from "./Button";
 import Logo from "@/public/Logo.svg";
 import MenuBars from "@/public/menu.svg";
 import DropdownButton from "./DropdownButton";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
+// import { useRouter } from 'next/router';
 
 const Navbar = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
   const [isNavVisible, setIsNavVisible] = useState(false);
@@ -18,12 +19,13 @@ const Navbar = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
     setIsNavVisible(!isNavVisible);
   };
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
+  // const router = useRouter();
 
   const logout = () => {
     localStorage.removeItem("token");
     setToken("");
-    navigate('/')
+    // router.push('/')
   }
 
   return (
@@ -69,7 +71,7 @@ const Navbar = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
               </a>
             ))}
 
-            {!token? (
+            {token ? (
                 <div className="regular-16 mt-3 flexCenter cursor-pointer pb-1.5 transition-all hover:font-bold">
                   <DropdownButton 
                     buttonText="My Account" 
