@@ -29,7 +29,7 @@ const Navbar: React.FC = () => {
   const logout = () => {
     localStorage.removeItem('token');
     setToken('');
-    window.location.reload();
+    window.location.href = '/';
   };
 
   return (
