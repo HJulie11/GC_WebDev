@@ -1,9 +1,15 @@
 import '../styles/globals.css';
+import StoreContextProvider from '../context/storeContext';
+import MainLayout from '../components/MainLayout';
 
 function MyApp({ Component, pageProps }) {
-  const getLayout = Component.getLayout || ((page) => page);
-
-  return getLayout(<Component {...pageProps} />);
+  return (
+    <StoreContextProvider>
+      <MainLayout>
+        <Component {...pageProps} />
+      </MainLayout>
+    </StoreContextProvider>
+  );
 }
 
 export default MyApp;

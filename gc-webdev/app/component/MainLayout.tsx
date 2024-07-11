@@ -1,29 +1,30 @@
 "use client"
+import '../globals.css';
+import Navbar from './Navbar';
+import Footer from './Footer';
+import React, { useEffect, useContext } from 'react';
+import { storeContext } from '../context/storeContext';
 
-import '../globals.css'
-import Navbar from './Navbar'
-import Footer from './Footer'
-import React from 'react'
+export default function MainLayout({ children }: { children: React.ReactNode }) {
 
-export default function MainLayout({children}: {children: React.ReactNode}) {
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      console.log('Token found in localStorage:', token);
+    }
+  }, [])
 
-  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
-
-  // Simulate a login action
-  const handleLogin = () => {
-    setIsLoggedIn(true);
-  };
+  console.log('MainLayout mounted'); // Add a log to check if MainLayout mounts
 
   return (
-    <html>
+    <html lang="en">
       <body>
         <div>
-          <Navbar isLoggedIn={isLoggedIn}/>
+          <Navbar />
           <main>{children}</main>
           <Footer />
         </div>
-      </body>    
+      </body>
     </html>
-    
-  )
+  );
 }

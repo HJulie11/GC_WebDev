@@ -11,7 +11,7 @@ const LogInPage: React.FC = () => {
     return (
         <StoreContextProvider>
             <div className='flex center items-center justify-center h-screen'>
-                <LogIn setEmail={setEmail} setIsLoggedIn={setIsLoggedIn}/>
+                <LogIn />
             </div>
         </StoreContextProvider>
     )

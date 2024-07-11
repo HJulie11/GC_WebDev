@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { MouseEventHandler, useState } from 'react';
 
 interface DropdownButtonProps {
   buttonText: string;
-  items: { label: string; href: string }[];
+  items: { label: string; href: string; onClick?:MouseEventHandler<HTMLAnchorElement>; }[];
 }
 
 const DropdownButton: React.FC<DropdownButtonProps> = ({ buttonText, items }) => {
@@ -28,6 +28,7 @@ const DropdownButton: React.FC<DropdownButtonProps> = ({ buttonText, items }) =>
             <a
               key={index}
               href={item.href}
+              onClick={item.onClick}
               className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
             >
               {item.label}
