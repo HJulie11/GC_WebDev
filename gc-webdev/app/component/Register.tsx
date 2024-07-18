@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic';
 import { storeContext } from '../context/storeContext';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
+import { group } from 'console';
 
 // Dynamically import DaumPostcode
 const DaumPostcode = dynamic(() => import('react-daum-postcode'), { ssr: false });
@@ -20,6 +21,8 @@ const Register: React.FC = () => {
         mobileNumber: '',
         gender: '',
         address: '',
+        institute: '',
+        group: ''
     });
     const [error, setError] = useState('');
     const [isPostcodeOpen, setIsPostcodeOpen] = useState(false);
@@ -72,13 +75,13 @@ const Register: React.FC = () => {
                 setToken(response.data.token);
                 localStorage.setItem('token', response.data.token);
                 console.log('Token set in localStorage:', response.data.token);
-                router.push('/');
+                router.push('/login');
             } else {
                 setError(response.data.message);
             }
         } catch (error) {
             console.error('Register error:', error);
-            setError('회원가입 실패. 다시 시도해주세요.');
+            // setError('회원가입 실패. 다시 시도해주세요.');
         }
     };
 

@@ -38,7 +38,7 @@ const createToken = (id) => {
 
 //REGISTER USER
 const registerUser = async (req, res) => {
-    const {name , password, email} = req.body;
+    const {fullname , email, password, dateofbirth, mobilenumber, gender, address, institute, group} = req.body;
     try {
         // CHECK IF USER EXISTS
         const exists = await userModel.findOne({email});
