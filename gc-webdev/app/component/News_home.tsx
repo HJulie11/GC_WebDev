@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Card from "./NewsCard";
+import Link from "next/link"
 
 interface VideoItem {
   id: {
@@ -42,12 +43,14 @@ const News_home = () => {
         <div className="w-[15%] font-bold">CNN News</div>
         <div className="w-[85%] h-[320px] items-center flex flex-row overflow-x-auto whitespace-nowrap pl-1">
           {cnnVideos.map((video) => (
-            <Card
-              key={video.id.videoId}
-              title={video.snippet.title}
-              url={`https://www.youtube.com/watch?v=${video.id.videoId}`}
-              thumbnail={video.snippet.thumbnails.medium.url}
-            />
+            <Link href={`/dictation`} key={video.id.videoId} passHref>
+              <Card
+                key={video.id.videoId}
+                title={video.snippet.title}
+                url={`https://www.youtube.com/watch?v=${video.id.videoId}`}
+                thumbnail={video.snippet.thumbnails.medium.url}
+              />
+            </Link>
           ))}
         </div>
       </div>
@@ -56,12 +59,14 @@ const News_home = () => {
         <div className="w-[15%] font-bold">BBC News</div>
         <div className="w-[85%] h-[320px] items-center flex flex-row overflow-x-auto whitespace-nowrap pl-1">
           {bbcVideos.map((video) => (
-            <Card
-              key={video.id.videoId}
-              title={video.snippet.title}
-              url={`https://www.youtube.com/watch?v=${video.id.videoId}`}
-              thumbnail={video.snippet.thumbnails.medium.url}
+            <Link href={`/dictation`} key={video.id.videoId} passHref>
+              <Card
+                key={video.id.videoId}
+                title={video.snippet.title}
+                url={`https://www.youtube.com/watch?v=${video.id.videoId}`}
+                thumbnail={video.snippet.thumbnails.medium.url}
             />
+          </Link>
           ))}
         </div>
       </div>
