@@ -1,5 +1,4 @@
-// "usercontroller"
-import userModel from "../models/usermodel.js";
+import userModel from "../models/userModel.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import validator from "validator";
@@ -39,7 +38,7 @@ const createToken = (id) => {
 
 //REGISTER USER
 const registerUser = async (req, res) => {
-    const {name, email, password, dateofbirth, mobilenumber, gender, address} = req.body;
+    const {fullname , email, password, dateofbirth, mobilenumber, gender, address, institute, group} = req.body;
     try {
         // CHECK IF USER EXISTS
         const exists = await userModel.findOne({email});
@@ -61,13 +60,15 @@ const registerUser = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, salt);
 
         const newUser = new userModel({
-            name: name,
+            fullname: fullname,
             email: email,
             password: hashedPassword,
             dateofbirth: dateofbirth,
             mobilenumber: mobilenumber,
             gender: gender,
-            address: address
+            address: address,
+            institute: institute,
+            group: group
         });
 
         const user = await newUser.save();
