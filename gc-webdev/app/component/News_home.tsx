@@ -51,7 +51,8 @@ const News_home = () => {
                 query: {
                   title: video.snippet.title,
                   url: `https://www.youtube.com/watch?v=${video.id.videoId}`,
-                  thumbnail: video.snippet.thumbnails.medium.url
+                  thumbnail: video.snippet.thumbnails.medium.url,
+                  key: video.id.videoId
                 },
                 }}
               key={video.id.videoId} 
