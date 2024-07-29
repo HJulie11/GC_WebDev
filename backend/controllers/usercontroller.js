@@ -82,4 +82,36 @@ const registerUser = async (req, res) => {
 
 }
 
-export { loginUser, registerUser };
+// GET USER PROFILE
+const getUserProfile = async (req, res) => {
+    const token = req.headers.authorization?.split(' ')[1];
+    if (!token) {
+        return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const user = await userModel.findById(decoded.id);
+
+        if (user) {
+            res.json({
+                fullname: user.fullname,
+                email: user.email,
+                password: user.hashedPassword,
+                dateofbirth: user.dateofbirth,
+                mobilenumber: user.mobilenumber,
+                gender: user.gender,
+                address: user.address,
+                institute: user.institute,
+                group: user.group
+            });
+        } else {
+            res.status(404).json({ error: 'User not found' });
+        }
+    } catch (error) {
+        res.status(401).json({ error: 'Unauthorized' });
+    }
+};
+
+
+export { loginUser, registerUser, getUserProfile };

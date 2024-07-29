@@ -11,8 +11,9 @@ import DropdownButton from './DropdownButton';
 import LocalStorage from '@/constants/localstorage';
 
 const Navbar: React.FC = () => {
-  const { setToken } = useContext(storeContext);
+  const { token, setToken } = useContext(storeContext);
   const [isNavVisible, setIsNavVisible] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
   const localToken = LocalStorage.getItem('token');
 
   const toggleNav = () => {
@@ -20,17 +21,22 @@ const Navbar: React.FC = () => {
   };
 
   useEffect(() => {
+    setIsMounted(true);
     if (localToken) {
       setToken(localToken);
       console.log('Token found in localStorage:', localToken);
-    } 
-  }, []);
+    }
+  }, [localToken, setToken]);
 
   const logout = () => {
     localStorage.removeItem('token');
     setToken('');
     window.location.href = '/';
   };
+
+  if (!isMounted) {
+    return null; // Ensures the component does not render until mounted
+  }
 
   return (
     <>

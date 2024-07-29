@@ -2,7 +2,7 @@ import React, { MouseEventHandler, useState } from 'react';
 
 interface DropdownButtonProps {
   buttonText: string;
-  items: { label: string; href: string; onClick?:MouseEventHandler<HTMLAnchorElement>; }[];
+  items: { label: string; href: string; onClick?: MouseEventHandler<HTMLAnchorElement>; }[];
 }
 
 const DropdownButton: React.FC<DropdownButtonProps> = ({ buttonText, items }) => {
