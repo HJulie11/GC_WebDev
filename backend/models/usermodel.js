@@ -32,11 +32,11 @@ const userSchema = new mongoose.Schema({
     },
     institute: {
         type: String,
-        required: true
+        // required: true
     },
     group: {
         type: String,
-        required: true
+        // required: true
     },
 })
 
