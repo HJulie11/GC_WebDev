@@ -1,20 +1,23 @@
-import React from 'react'
+import React from 'react';
 
 interface NewsCardProps {
-        title: string; // title of the news (API)
-        url: string; // url to start studying (dictation)
-        thumbnail: string; // thumbnail of the news (API)
+    title: string;
+    url: string;
+    thumbnail: string;
 }
 
-const NewsCard: React.FC<NewsCardProps> = ({ title, url, thumbnail = '' }) => {
+const NewsCard: React.FC<NewsCardProps> = ({ title, url, thumbnail }) => {
     return (
-        <div className='w-[320px] h-[180px] shadow-md mr-5 rounded-lg'>
-            <a href={url}>
-                <img src={thumbnail} alt={title} width={320} height={180} />
+        <div className="w-[320px] h-[180px] shadow-md mr-5 rounded-lg flex-shrink-0">
+            <a href={url} target="_blank" rel="noopener noreferrer">
+                <img 
+                    src={thumbnail} 
+                    alt={title} 
+                    className="w-full h-full object-cover" 
+                />
             </a>
         </div>
-        
-    )
+    );
 }
 
-export default NewsCard
+export default NewsCard;

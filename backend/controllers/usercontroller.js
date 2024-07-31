@@ -1,4 +1,5 @@
-import userModel from "../models/userModel.js";
+// "usercontroller"
+import userModel from "../models/usermodel.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import validator from "validator";
@@ -38,7 +39,7 @@ const createToken = (id) => {
 
 //REGISTER USER
 const registerUser = async (req, res) => {
-    const {fullname , email, password, dateofbirth, mobilenumber, gender, address, institute, group} = req.body;
+    const {name, email, password, dateofbirth, mobilenumber, gender, address} = req.body;
     try {
         // CHECK IF USER EXISTS
         const exists = await userModel.findOne({email});
@@ -60,15 +61,13 @@ const registerUser = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, salt);
 
         const newUser = new userModel({
-            fullname: fullname,
+            name: name,
             email: email,
             password: hashedPassword,
             dateofbirth: dateofbirth,
             mobilenumber: mobilenumber,
             gender: gender,
-            address: address,
-            institute: institute,
-            group: group
+            address: address
         });
 
         const user = await newUser.save();
@@ -82,36 +81,4 @@ const registerUser = async (req, res) => {
 
 }
 
-// GET USER PROFILE
-const getUserProfile = async (req, res) => {
-    const token = req.headers.authorization?.split(' ')[1];
-    if (!token) {
-        return res.status(401).json({ error: 'Unauthorized' });
-    }
-
-    try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        const user = await userModel.findById(decoded.id);
-
-        if (user) {
-            res.json({
-                fullname: user.fullname,
-                email: user.email,
-                password: user.hashedPassword,
-                dateofbirth: user.dateofbirth,
-                mobilenumber: user.mobilenumber,
-                gender: user.gender,
-                address: user.address,
-                institute: user.institute,
-                group: user.group
-            });
-        } else {
-            res.status(404).json({ error: 'User not found' });
-        }
-    } catch (error) {
-        res.status(401).json({ error: 'Unauthorized' });
-    }
-};
-
-
-export { loginUser, registerUser, getUserProfile };
+export { loginUser, registerUser };
