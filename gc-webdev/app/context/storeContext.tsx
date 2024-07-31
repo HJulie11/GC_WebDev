@@ -1,3 +1,4 @@
+import { se } from 'date-fns/locale';
 import React, { createContext, useState, useEffect } from 'react';
 
 interface StoreContextProps {
@@ -7,7 +8,7 @@ interface StoreContextProps {
 }
 
 export const storeContext = createContext<StoreContextProps>({
-  url: 'http://localhost:4000',
+  url: '',
   token: '',
   setToken: () => {}
 });
@@ -17,12 +18,12 @@ const StoreContextProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [token, setToken] = useState<string>(localStorage.getItem('token') || '');
 
   useEffect(() => {
-    const localToken = localStorage.getItem('token');
+    const localToken = localStorage.getItem('token')
     if (localToken) {
       setToken(localToken);
       console.log('Token found in localStorage:', localToken);
     }
-  }, []);
+  }, [token]);
 
   const contextValue = {
     url,
