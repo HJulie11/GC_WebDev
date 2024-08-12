@@ -1,30 +1,37 @@
 "use client"
-import React, { useState } from 'react'
-import DaumPostcode from 'react-daum-postcode';
+import React, { ChangeEvent, FormEvent, useContext, useState } from 'react'
+import dynamic from 'next/dynamic'
 import CSVReader from 'react-csv-reader';
+import { useRouter } from 'next/navigation';
+import { storeContext } from '../context/storeContext';
+import axios from 'axios';
 
-const AdminRegister = () => {
+const DaumPostcode = dynamic(() => import('react-daum-postcode'), { ssr: false });
+
+const AdminRegister: React.FC = () => {
+    const { url, setToken } = useContext(storeContext);
+    const router = useRouter();
     const [formData, setFormData] = useState({
-        name: '', // 담당자 이름 (기관 총괄 관리자) {/* Manager's name (Institutional overall manager) */}
+        adminname: '', // 담당자 이름 (기관 총괄 관리자) {/* Manager's name (Institutional overall manager) */}
         email: '', // 이메일 (담당자 - 연락 가능한 이메일) {/* Email (Manager - Contactable email) */}
         password: '', // 비밀번호 {/* Password */}
         confirmPassword: '',
+        dateofbirth: '', //생년월일 {/* Date of birth */}
+        mobilenumber: '', //전화번호 {/* Mobile number */}
         address: '', //기관 주소 {/* Institution address */}
-        institute_name: '', //기관명 {/* Institution name */}
-        mobileNumber: '', //담당자 연락처 {/* Manager's contact number */}
-        // admin_type: '', //관리자 유형 {/* Administrator type - two types for different access */}
-        registerStudents: null, //등록 학생 {/* registered students */}
-        registerAdmins: null, //그룹 관리자 등록 {/* admins for each group registered */}
+        institute: '', //기관명 {/* Institution name */}
+        group: '', //그룹명 {/* Group name */}
+        registerStudents: '', //등록 학생 {/* registered students */}
+        registerAdmins: '', //그룹 관리자 등록 {/* admins for each group registered */}
     });
-
-    const handleChange = (e : any) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value,
-        });
-    };
-
+    const [error, setError] = useState('');
     const [isPostcodeOpen, setIsPostcodeOpen] = useState(false);
+    
+    const handleChange = (e : ChangeEvent<HTMLInputElement>) => {
+        const name = e.target.name;
+        const value = e.target.value;
+        setFormData(data => ({ ...data, [name]: value }));
+    };
 
 
     const handleComplete = (data: { address: any; addressType: string; bname: string; buildingName: string; }) => {
@@ -48,41 +55,42 @@ const AdminRegister = () => {
         setIsPostcodeOpen(false);
     };
 
-    const handleFileLoad = (data: any) => {
-            setFormData({
-                ...formData,
-                registerStudents: data,
-                registerAdmins: data,
-            });
+    const handleFileLoad = async (data: any) => {
+        
+        setFormData({
+            ...formData,
+            registerStudents: data,
+            registerAdmins: data,
+        });
     };
 
-    const handleSubmit = async (e : any) => {
+    const handleSubmit = async (e : FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        // Handle form submission
-        console.log(formData);
-        // try {
-        //     const response = await fetch('/api/register', {
-        //         method: 'POST',
-        //         headers: {
-        //           'Content-Type': 'application/json',
-        //         },
-        //         body: JSON.stringify(formData),
-        //     });
-        //     if (response.ok) {
-        //         // Handle successful registration
-        //         console.log('Registration successful');
-        //     } else {
-        //         // Handle error
-        //         console.error('Registration failed');
-        //     }
-        // } catch (error) {
+        const newUrl = `${url}/api/admin/register`;
 
-        // }
-        if (formData.registerStudents) {
-            console.log('register_students:', formData.registerStudents);
-        } 
-        if (formData.registerAdmins) {
-            console.log('register_admins:', formData.registerAdmins);
+        if (formData.password !== formData.confirmPassword) {
+            setError('비밀번호와 비밀번호 확인이 일치하지 않습니다.');
+            return;
+        }
+
+        console.log('Form data:', formData);
+        console.log('Request URL:', newUrl);
+
+        try {
+            const response = await axios.post(newUrl, formData);
+            console.log('Response:', response);
+
+            if (response.data.success) {
+                setToken(response.data.token);
+                localStorage.setItem('token', response.data.token);
+                console.log('Token set in localStorage:', response.data.token);
+                router.push('/adminhome');
+            } else {
+                setError(response.data.message);
+            }
+        } catch (error) {
+            console.error('Register error:', error);
+            setError('회원가입 실패. 다시 시도해주세요.');
         }
 
     };
@@ -94,28 +102,28 @@ const AdminRegister = () => {
                 <form onSubmit={handleSubmit}>
                     <div className='flex flex-row mb-4 w-full'> {/* 기관명, 담당자 이름 */}
                         <div className="w-[50%] pr-5"> {/* 담당자 이름 */}
-                            <label className="block text-[18px] mb-2" htmlFor="name">
+                            <label className="block text-[18px] mb-2" htmlFor="adminname">
                                 담당자 이름 {/*Name*/}
                             </label>
                             <input
-                                id="name"
-                                name="name"
+                                id="adminname"
+                                name="adminname"
                                 type="text"
-                                value={formData.name}
+                                value={formData.adminname}
                                 onChange={handleChange}
                                 required
                                 className="appearance-none border-1 shadow-sm rounded py-2 px-3 text-gray-90 leading-tight focus:outline-none focus:shadow-outline"
                             />
                         </div>
                         <div className='w-[50%] px-5'> {/* 기관 이름 */}
-                            <label className="block text-[18px] mb-2" htmlFor="institute_name">
+                            <label className="block text-[18px] mb-2" htmlFor="institute">
                                 기관 이름 {/* Institue name */}
                             </label>
                             <input
-                                id="institute_name"
-                                name="institute_name"
+                                id="institute"
+                                name="institute"
                                 type="text"
-                                value={formData.institute_name}
+                                value={formData.institute}
                                 onChange={handleChange}
                                 required
                                 className="appearance-none border-1 shadow-sm rounded py-2 px-3 text-gray-90 leading-tight focus:outline-none focus:shadow-outline"
@@ -139,15 +147,15 @@ const AdminRegister = () => {
                             />
                         </div>
                         <div className="w-[50%] px-5">
-                            <label className="block text-[18px] mb-2" htmlFor="mobileNumber">
+                            <label className="block text-[18px] mb-2" htmlFor="mobilenumber">
                                 전화번호 {/*mobile number*/}
                                 <span className="text-sm text-gray-20"> (01012345678 형태로 기입 - 번호만 기입) {/* only numbers */}</span>
                             </label>
                             <input
-                                id="mobileNumber"
-                                name="mobileNumber"
-                                type="mobileNumber"
-                                value={formData.mobileNumber}
+                                id="mobilenumber"
+                                name="mobilenumber"
+                                type="mobilenumber"
+                                value={formData.mobilenumber}
                                 onChange={handleChange}
                                 required
                                 className="appearance-none border-1 shadow-sm rounded w-full py-2 px-3 text-gray-90 leading-tight focus:outline-none focus:shadow-outline"
@@ -198,19 +206,19 @@ const AdminRegister = () => {
                         <button type="button" className="ml-5 bg-gray-10 text-black text-[15px] py-2 px-4" onClick={() => setIsPostcodeOpen(true)}>주소 찾기 {/* find address */}</button>
                     </div>
                     {isPostcodeOpen && (
-                    <DaumPostcode
-                            onComplete={handleComplete}
-                            autoClose={false}
-                            style={{ width: '100%', height: '400px' }}
-                    />
+                        <DaumPostcode
+                                onComplete={handleComplete}
+                                autoClose={false}
+                                style={{ width: '100%', height: '400px' }}
+                        />
                     )}
                     <div className='mb-4'> {/* 학생 파일 업로드 */}
-                        <label className="block text-[18px] mb-2" htmlFor="register_students">학생 등록하기: <span className='text-[15px] text-gray-20'> 학생 정보를 업로드하려면 CSV 파일을 업로드하십시오. {/* Upload a CSV file to upload student information. */}</span></label>
-                        <CSVReader onFileLoaded={handleFileLoad} />
+                        <label className="block text-[18px] mb-2" htmlFor="registerStudents">학생 등록하기: <span className='text-[15px] text-gray-20'> 학생 정보를 업로드하려면 CSV 파일을 업로드하십시오. {/* Upload a CSV file to upload student information. */}</span></label>
+                        <CSVReader inputName="registerStudent" onFileLoaded={handleFileLoad} />
                     </div>
                     <div className='mb-4'> {/* 그룹 관리자 파일 업로드 */}
-                        <label className="block text-[18px] mb-2" htmlFor="register_admins">그룹별 관리자 등록하기: <span className='text-[15px] text-gray-20'> 그룹별 관리자 정보를 업로드하려면 CSV 파일을 업로드하십시오. {/* Upload a CSV file to upload student information. */}</span></label>
-                        <CSVReader onFileLoaded={handleFileLoad} />
+                        <label className="block text-[18px] mb-2" htmlFor="registerAdmins">그룹별 관리자 등록하기: <span className='text-[15px] text-gray-20'> 그룹별 관리자 정보를 업로드하려면 CSV 파일을 업로드하십시오. {/* Upload a CSV file to upload student information. */}</span></label>
+                        <CSVReader inputName="registerAdmins" onFileLoaded={handleFileLoad} />
                     </div>
                     <div className="mt-10 mb-6">
                         <button

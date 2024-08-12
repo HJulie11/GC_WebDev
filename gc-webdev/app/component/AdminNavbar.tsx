@@ -1,17 +1,42 @@
 "use client"
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { storeContext } from "../context/storeContext";
 import { ADMIN_NAV_LINKS } from "@/constants";
 import Image from "next/image";
 import Link from "next/link";
 import Logo from "@/public/Logo.svg";
 import MenuBars from "@/public/menu.svg";
+import LocalStorage from "@/constants/localstorage";
+import DropdownButton from "./DropdownButton";
+import Button from "./Button";
 
-const AdminNavbar = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
+const AdminNavbar: React.FC = () => {
+  const { token, setToken } = useContext(storeContext);
   const [isNavVisible, setIsNavVisible] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+  const localToken = LocalStorage.getItem("token");
 
   const toggleNav = () => {
     setIsNavVisible(!isNavVisible);
   };
+
+  useEffect(() => {
+    setIsMounted(true);
+    if (localToken) {
+      setToken(localToken);
+      console.log("Token found in localStorage:", localToken);
+    }
+  }, [localToken, setToken]);
+
+  const logout = () => {
+    localStorage.removeItem("token");
+    setToken("");
+    window.location.href = "/";
+  }
+
+  if (!isMounted) {
+    return null; // Ensures the component does not render until mounted
+  }
 
   return (
     <>
@@ -33,13 +58,13 @@ const AdminNavbar = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
         >
           <ul className="h-full gap-12 lg:flex">
             {ADMIN_NAV_LINKS.map((link) => (
-              <a
+              <Link
                 key={link.label}
                 className="regular-16 text-gray-50 mt-28 flexCenter cursor-pointer pb-1.5 transition-all hover:font-bold"
                 href={link.href}
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
           </ul>
         </div>
@@ -47,14 +72,32 @@ const AdminNavbar = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
         <div className={`sm:${!isNavVisible ? "" : "hidden"} center items-center h-[100px]`}>
             <ul className="hidden h-full gap-12 lg:flex">
                 {ADMIN_NAV_LINKS.map((link) => (
-                    <a
+                    <Link
                         key={link.label}
                         className="regular-16 text-gray-50 mt-3 flexCenter cursor-pointer pb-1.5 transition-all hover:font-bold"
                         href={link.href}
                     >
                         {link.label}
-                    </a>
+                    </Link>
                 ))}
+
+                {localToken ? (
+                  <div className="regular-16 mt-3 flexCenter cursor-pointer pb-1.5 transition-all hover:font-bold">
+                    <DropdownButton 
+                      buttonText="My Account" 
+                      items={[
+                        { label: 'Profile', href:'/adminaccount'},
+                        { label: 'Log out', href:'#', onClick: logout}
+                      ]}
+                    />
+                  </div>
+                ) : (
+                  <div className="lg:flexCenter hidden">
+                    <Link href="/adminlogin">
+                      <Button type="button" title="Login" variant="btn_dark_green"/>
+                    </Link>
+                  </div>
+                )}
             </ul>
         </div>
 

@@ -14,7 +14,7 @@ const AdminHome = () => {
 
     return (
         <>
-        <AdminNavbar isLoggedIn={isLoggedIn} />
+        <AdminNavbar/>
         <AdminHomeComponent />
         <AdminFooter />
         </>

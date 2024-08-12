@@ -3,6 +3,7 @@ import cors from 'cors'
 import { connectDB } from './config/db.js'
 import 'dotenv/config'
 import userRouter from './routes/userRoute.js'
+import adminRouter from './routes/adminRoute.js'
 
 // APP CONFIG
 const app = express()
@@ -23,6 +24,7 @@ app.use(express.urlencoded({ extended: true }));
 connectDB()
 
 app.use('/api/user', userRouter) // require('./routes/userRoute.js')
+app.use('/api/admin', adminRouter) // require('./routes/adminRoute.js')
 app.use('/audioFiles', express.static('uploads'))
 
 app.get('/', (req, res) => {

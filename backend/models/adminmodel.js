@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const userSchema = new mongoose.Schema({
+const adminSchema = new mongoose.Schema({
     adminname: {
         type: String,
         required: true
@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema({
     },
     dateofbirth: {
         type: String,
-        required: true
+        // required: true
     },
     mobilenumber: {
         type: String,
@@ -36,14 +36,14 @@ const userSchema = new mongoose.Schema({
     },
     studentlist: {
         type: [String], // parser is needed to get string from the uploaded csv file.
-        required: true
+        // required: false
     },
     groupadmin: {
         type: [String], // parser is needed to get string from the uploaded csv file.
-        required: true
+        // required: false
     },
 })
 
-const usermodel = mongoose.models.user || mongoose.model('user', userSchema);
+const adminmodel = mongoose.models.admin || mongoose.model('admin', adminSchema);
 
-export default usermodel;
+export default adminmodel;
