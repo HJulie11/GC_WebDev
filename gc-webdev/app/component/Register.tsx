@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic';
 import { storeContext } from '../context/storeContext';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
+import { group } from 'console';
 
 // Dynamically import DaumPostcode
 const DaumPostcode = dynamic(() => import('react-daum-postcode'), { ssr: false });
@@ -19,7 +20,7 @@ const Register: React.FC = () => {
     dateofbirth: '',
     mobilenumber: '',
     gender: '',
-    address: ''
+    address: '',
   });
   const [error, setError] = useState('');
   const [isPostcodeOpen, setIsPostcodeOpen] = useState(false);

@@ -32,11 +32,11 @@ const userSchema = new mongoose.Schema({
     },
     institute: {
         type: String,
-        required: true
+        required: false
     },
     group: {
         type: String,
-        required: true
+        required: false
     },
     audioList: [{ 
         fileName: String 
