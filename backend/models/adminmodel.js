@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
-    name: {
+    adminname: {
         type: String,
         required: true
     },
@@ -22,26 +22,27 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    gender: {
-        type: String,
-        required: true
-    },
     address: {
         type: String,
         required: true
     },
     institute: {
         type: String,
-        required: true
+        // required: true
     },
     group: {
         type: String,
+        // required: true
+    },
+    studentlist: {
+        type: [String], // parser is needed to get string from the uploaded csv file.
         required: true
     },
-    audioList: [{ 
-        fileName: String 
-    }]
-}, {minimize: false});
+    groupadmin: {
+        type: [String], // parser is needed to get string from the uploaded csv file.
+        required: true
+    },
+})
 
 const usermodel = mongoose.models.user || mongoose.model('user', userSchema);
 

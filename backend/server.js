@@ -11,11 +11,19 @@ const port = 4000
 //MIDDLEWARE
 app.use(express.json())
 app.use(cors())
+app.use(express.static('uploads'));
+
+// Middleware to parse JSON bodies
+app.use(express.json());
+
+// Middleware to parse URL-encoded bodies
+app.use(express.urlencoded({ extended: true }));
  
 // DB CONNECTION
 connectDB()
 
 app.use('/api/user', userRouter) // require('./routes/userRoute.js')
+app.use('/audioFiles', express.static('uploads'))
 
 app.get('/', (req, res) => {
     res.send('API Working')

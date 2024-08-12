@@ -3,26 +3,6 @@ import GraphIcon from '@/public/Graph.png'
 import ManageIcon from '@/public/manage.png'
 import LandfillIcon from '@/public/landfill.png'
 
-// import { useEffect, useState } from 'react';
-
-// export default function Home() {
-//   const [data, setData] = useState(null);
-
-//   useEffect(() => {
-//     fetch('http://127.0.0.1:5000/api/data')
-//       .then(response => response.json())
-//       .then(data => setData(data));
-//   }, []);
-
-//   return (
-//     <div className="flex items-center justify-center min-h-screen bg-gray-100">
-//       <h1 className="text-4xl font-bold text-gray-900">
-//         {data ? data.message : 'Loading...'}
-//       </h1>
-//     </div>
-//   );
-// }
-
 
 // NAVIGATION
 export const NAV_LINKS = [
