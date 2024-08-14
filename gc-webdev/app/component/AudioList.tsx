@@ -34,7 +34,7 @@ const AudioList: React.FC = () => {
   }, []);
 
   if (!audioFiles || audioFiles.length === 0) {
-    return <div>No audio files uploaded yet.</div>;
+    return <div></div>;
   }
 
   return (

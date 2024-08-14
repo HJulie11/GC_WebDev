@@ -66,6 +66,30 @@ const Navbar: React.FC = () => {
                 {link.label}
               </Link>
             ))}
+
+            {localToken ? (
+              <div>
+                <Link
+                  href = "/profile"
+                  className="regular-16 text-gray-50 mt-28 flexCenter cursor-pointer pb-1.5 transition-all hover:font-bold"
+                > 
+                  Profile 
+                </Link>
+                <Link
+                  href = "/"
+                  className="regular-16 text-gray-50 mt-28 flexCenter cursor-pointer pb-1.5 transition-all hover:font-bold"
+                  onClick={logout}
+                > 
+                  Logout 
+                </Link>
+              </div>
+            ) : (
+              <div className="mt-28 flexCenter regular-16 text-gray-50 cursor-pointer pb-1.5 transition-all hover:font-bold">
+                <Link href="/login">
+                  <button type="button">Log in</button>
+                </Link>
+              </div>
+            )}
           </ul>
         </div>
 
