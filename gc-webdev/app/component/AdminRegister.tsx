@@ -122,7 +122,7 @@ const AdminRegister: React.FC = () => {
                             <input
                                 id="institute"
                                 name="institute"
-                                type="text"
+                                type="institute"
                                 value={formData.institute}
                                 onChange={handleChange}
                                 required
@@ -154,7 +154,7 @@ const AdminRegister: React.FC = () => {
                             <input
                                 id="mobilenumber"
                                 name="mobilenumber"
-                                type="mobilenumber"
+                                type="text"
                                 value={formData.mobilenumber}
                                 onChange={handleChange}
                                 required
@@ -191,6 +191,11 @@ const AdminRegister: React.FC = () => {
                             className="appearance-none border-1 shadow-sm rounded w-[40%] py-2 px-3 text-gray-90 leading-tight focus:outline-none focus:shadow-outline"
                         />
                     </div>
+                    {error && (
+                        <div className="mb-4 text-red-500">
+                            {error}
+                        </div>
+                    )}
                     
                     <div className='mb-4'> {/* 주소 */}
                         <label className="block text-[18px] mb-2" htmlFor="address">주소: {/* address */} </label>
@@ -207,9 +212,9 @@ const AdminRegister: React.FC = () => {
                     </div>
                     {isPostcodeOpen && (
                         <DaumPostcode
-                                onComplete={handleComplete}
-                                autoClose={false}
-                                style={{ width: '100%', height: '400px' }}
+                            onComplete={handleComplete}
+                            autoClose={false}
+                            style={{ width: '100%', height: '400px' }}
                         />
                     )}
                     <div className='mb-4'> {/* 학생 파일 업로드 */}

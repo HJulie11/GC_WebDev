@@ -9,11 +9,10 @@ import { error } from 'console'
 const AdminLogin: React.FC = () => {
   const { url, setToken } = useContext(storeContext)
   const router = useRouter()
-  const [currState, setCurrState] = useState('로그인')
   const [data, setData] = useState({
-    email: '',
-    password: ''
-  })
+    email: "",
+    password: ""
+  });
   const [error, setError] = useState('')
 
   const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
@@ -38,7 +37,7 @@ const AdminLogin: React.FC = () => {
       }
     } catch (error) {
       console.error('Login error:', error)
-      setCurrState('로그인 실패. 다시 시도해주세요.')
+      setError('로그인 실패. 다시 시도해주세요.')
     }
   }
 
@@ -47,7 +46,7 @@ const AdminLogin: React.FC = () => {
         <h1 className='text-4xl font-bold text-purple-heavy mb-5'>로그인 {/* Login */}</h1>
         <form onSubmit={onLogin} className='flex flex-col gap-4 lg:w-[500px]'>
             <input 
-              type='text'
+              type='email'
               name = 'email'
               placeholder='Email' 
               value = {data.email}
@@ -59,11 +58,11 @@ const AdminLogin: React.FC = () => {
               name = 'password'
               placeholder='Password' 
               value = {data.password}
-              onAbort={onChangeHandler}
+              onChange={onChangeHandler}
               className='p-2 border border-purple-light rounded' 
             />
             {error && <p className='text-red-500 text-sm'>{error}</p>}
-            <button className='bg-purple-heavy text-white font-bold p-2 rounded text-center'> 로그인 {/* Login */}</button>
+            <button type="submit" className='bg-purple-heavy text-white font-bold p-2 rounded text-center'> 로그인 {/* Login */}</button>
             <div className='flex flex-row center justify-center'>
                 <Link href="/adminregister" className='text-sm text-center'>
                     <p className='text-underline text-grey-light'> 관리자 등록 {/* Register admin */} </p>

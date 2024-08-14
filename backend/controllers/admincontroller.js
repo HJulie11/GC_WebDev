@@ -62,14 +62,14 @@ const registerAdmin = async (req, res) => {
             password: hashedPassword,
             dateofbirth: dateofbirth,
             mobilenumber: mobilenumber,
-            addres: address,
+            address: address,
             institute: institute,
             group: group,
             studentlist: studentlist,
             groupadmin: groupadmin
         })
 
-        const user = await newAdmin.save();
+        const admin = await newAdmin.save();
         const token = createToken(admin._id);
         res.json({success:true, token});
     } catch (error) {

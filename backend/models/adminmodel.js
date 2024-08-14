@@ -16,7 +16,7 @@ const adminSchema = new mongoose.Schema({
     },
     dateofbirth: {
         type: String,
-        // required: true
+        required: true
     },
     mobilenumber: {
         type: String,
@@ -28,11 +28,11 @@ const adminSchema = new mongoose.Schema({
     },
     institute: {
         type: String,
-        // required: true
+        required: true
     },
     group: {
         type: String,
-        // required: true
+        required: true
     },
     studentlist: {
         type: [String], // parser is needed to get string from the uploaded csv file.

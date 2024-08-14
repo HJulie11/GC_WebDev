@@ -4,7 +4,7 @@ import AdminRegister from '../component/AdminRegister'
 const page = () => {
   return (
     <>
-    <AdminRegister />
+      <AdminRegister />
     </>
   )
 }
