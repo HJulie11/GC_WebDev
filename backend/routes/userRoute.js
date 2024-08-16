@@ -19,6 +19,16 @@ const storage = multer.diskStorage({
 
 userRouter.post('/register', registerUser);
 userRouter.post('/login', loginUser);
+userRouter.get('/myaccount', async (req, res) => {
+  try {
+    const user = await usermodel.findOne({ email: req.params.email });
+    if (!user) return res.status(404).json({ error: 'User not found' });
+
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ error: 'Server error' });
+  }
+})
 
 userRouter.post('/upload-audio', upload.single('audioFile'), authMiddleware, async (req, res) => {
   try {

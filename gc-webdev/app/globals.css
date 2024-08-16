@@ -267,3 +267,13 @@ body {
   color: #0070f3;
 }
 
+.circle {
+  width: 50%; /* 50% of the parent div's width */
+  height: 50%; /* Same as width to make it a perfect square */
+  border-radius: 50%; /* Makes the div a circle */
+  position: absolute; /* Position the circle within the parent */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Center the circle within the parent */
+}
+
