@@ -26,7 +26,6 @@ connectDB()
 app.use('/api/user', userRouter) // require('./routes/userRoute.js')
 app.use('/api/admin', adminRouter) // require('./routes/adminRoute.js')
 app.use('/audioFiles', express.static('uploads'))
-app.use('/myaccount', userRouter)
 
 app.get('/', (req, res) => {
     res.send('API Working')

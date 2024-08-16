@@ -32,70 +32,44 @@ const Profile: React.FC = () => {
   
   };
 
-  // const onSubmitHandler = async (e: FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   const newUrl = `${url}/api/user/updateProfile`;
-  //   const formData = new FormData();
-  //   formData.append('name', data.name);
-  //   formData.append('email', data.email);
-  //   formData.append('password', data.password);
-  //   formData.append('dateofbirth', data.dateofbirth);
-  //   formData.append('mobilenumber', data.mobilenumber);
-  //   formData.append('gender', data.gender);
-  //   formData.append('address', data.address);
-  //   // institue and group cannot be edited by user
-  //   if (image) {
-  //     formData.append('image', image);
-  //   }
-
-  //   try {
-  //     const response = await axios.put(`${url}/user/updateProfile`, formData, {
-  //       headers: {
-  //         'Content-Type': 'multipart/form-data',
-  //       }
-  //     });
-
-  //     const { name, email, password, dateofbirth, mobilenumber, gender, address, institute, group, image } = response.data;
-  //     LocalStorage.setItem('name', name);
-  //     LocalStorage.setItem('email', email);
-  //     LocalStorage.setItem('password', password);
-  //     LocalStorage.setItem('dateofbirth', dateofbirth);
-  //     LocalStorage.setItem('mobilenumber', mobilenumber);
-  //     LocalStorage.setItem('gender', gender);
-  //     LocalStorage.setItem('address', address);
-  //     if (institute) {
-  //       LocalStorage.setItem('institute', institute);
-  //     }
-  //     if (group) {
-  //       LocalStorage.setItem('group', group);
-  //     }
-  //     if (image) {
-  //       LocalStorage.setItem('image', image);
-  //     }
-
-  //     alert('Profile updated successfully');
-  //     window.location.reload();
-  //   } catch (error) {
-  //     console.error('Error updating profile:', error);
-  //     alert('Failed to update profile');
-  //   }
-  // }
-
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${url}/user/myaccount`);
-        const userData = response.data;
-        if (userData){
-          setData(userData);
-          setImage(userData.image || '');
+        const token = localStorage.getItem('token');
+        if (!token) {
+          console.error('Token is missing');
+          return;
         }
+        
+        const response = await axios.get(`${url}/api/user/myaccount`, { 
+          headers: { 'token': token },
+        });
+        
+        console.log('Response data:', response.data); // Debugging line
+  
+        const userData = {
+          name: response.data.name,
+          email: response.data.email,
+          password: response.data.password,
+          dateofbirth: response.data.dateofbirth,
+          mobilenumber: response.data.mobilenumber,
+          gender: response.data.gender,
+          address: response.data.address,
+          institute: response.data.institute,
+          group: response.data.group,
+          image: response.data.image,
+        };
+  
+        setData(userData);
+        setImage(userData.image || '');
       } catch (error) {
         console.error('Error fetching user data:', error);
       }
-    }
+    };
+  
     fetchData();
-  }, [url]);
+  }, []);
+  
 
   const onSubmitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -144,66 +118,73 @@ const Profile: React.FC = () => {
             <button className='text-purple-heavy text-[20px]'>✐</button>
           </div> */}
           <div className='mt-5 flex flex-row center items-center justify-center'>
-            <h1 className='regular-24 mr-2'>Welcome, {data.name}!</h1>
+            <h1 className='regular-24 mr-2'>Welcome, <span className='font-bold text-purple-heavy'>@{data.name}</span>!</h1>
           </div>
         </div>
         
         <div className='flex flex-col center items-center justify-center w-[70%] h-full p-10'>
-          <form className='flex flex-col w-full ' onSubmit={onSubmitHandler}>
-            <div className='mt-0 ml-0 text-[25px] text-bold text-purple-heavy'>
+          <form className='flex flex-col w-full ' onSubmit={onSubmitHandler} autoComplete='off'>
+            <div className='mt-0 ml-0 text-[25px] font-bold text-purple-heavy'>
               개인정보 {/** Translation: Personal Information */}
             </div>
-            <div className='flex flex-col mt-5 text-[18px]'>
+            <div className='flex flex-col mt-5 text-[15px]'>
               <div className='flex flex-row items-center mb-3'>
                 <div className='w-[45%] ml-0'>이름 {/** Translation: Name */}</div>
-                <input className="w-[45%] mr-0 border-1 rounded" type='text' name='name' value={data.name} onChange={onChangeHandler} required/>
+                {/* <input className="w-[45%] mr-0 rounded flexible-input" autoComplete='off' type='text' name='name' value={data.name} onChange={onChangeHandler} required/> */}
+                <div className='w-[45%] mr-0 flexible-input text-gray-50'>{data.name}</div>
               </div>
               <div className='flex flex-row items-center mb-3'>
                 <div className='w-[45%] ml-0'>이메일 {/** Translation: Email */}</div>
-                <input className="w-[45%] mr-0 border-1 rounded" type='text' name='email' value={data.email} onChange={onChangeHandler} required/>
+                {/* <input className="w-[45%] mr-0 rounded flexible-input" autoComplete='off' type='text' name='email' value={data.email} onChange={onChangeHandler} required/> */}
+                <div className='w-[45%] mr-0 flexible-input text-gray-50'>{data.email}</div>
               </div>
               <div className='flex flex-row items-center mb-3'>
                 <div className="w-[45%] ml-0">비밀번호 {/** Translation: Password */}</div>
-                <input className="w-[45%] mr-0 border-1 rounded" type='password' name='password' value={data.password} onChange={onChangeHandler} required/>
+                {/* <input className="w-[45%] mr-0 rounded flexible-input" autoComplete='off' type='password' name='password' onChange={onChangeHandler} required/> */}
               </div>
               <div className='flex flex-row items-center mb-3'>
                 <div className="w-[45%] ml-0">생년월일 {/** Translation: dateofbirth */}</div>
-                <input className="w-[45%] mr-0 border-1 rounded" type='dateofbirth' name='dateofbirth' value={data.dateofbirth} onChange={onChangeHandler} required/>
+                {/* <input className="w-[45%] mr-0 rounded flexible-input" autoComplete='off' type='dateofbirth' name='dateofbirth' value={data.dateofbirth} onChange={onChangeHandler} required/> */}
+                <div className='w-[45%] mr-0 flexible-input text-gray-50'>{data.dateofbirth}</div>
               </div>
               <div className='flex flex-row items-center mb-3'>
                 <div className="w-[45%] ml-0">전화번호 {/** Translation: mobilenumber */}</div>
-                <input className="w-[45%] mr-0 border-1 rounded" type='mobilenumber' name='mobilenumber' value={data.mobilenumber} onChange={onChangeHandler} required/>
+                {/* <input className="w-[45%] mr-0 rounded flexible-input" autoComplete='off' type='mobilenumber' name='mobilenumber' value={data.mobilenumber} onChange={onChangeHandler} required/> */}
+                <div className='w-[45%] mr-0 flexible-input text-gray-50'>{data.mobilenumber}</div>
               </div>
               <div className='flex flex-row items-center mb-3'>
                 <div className="w-[45%] ml-0">성별 {/** Translation: gender */}</div>
-                <input className="w-[45%] mr-0 border-1 rounded" type='gender' name='gender' value={data.gender} onChange={onChangeHandler} required/>
+                {/* <input className="w-[45%] mr-0 rounded flexible-input" autoComplete='off' type='gender' name='gender' value={data.gender} onChange={onChangeHandler} required/> */}
+                <div className='w-[45%] mr-0 flexible-input text-gray-50'>{data.gender}</div>
               </div>
               <div className='flex flex-row items-center mb-3'>
                 <div className="w-[45%] ml-0">주소 {/** Translation: address */}</div>
-                <input className="w-[45%] mr-0 border-1 rounded" type='address' name='address' value={data.address} onChange={onChangeHandler} required/>
+                {/* <input className="w-[45%] mr-0 rounded flexible-input" autoComplete='off' type='address' name='address' value={data.address} onChange={onChangeHandler} required/> */}
+                <div className='w-[45%] mr-0 flexible-input text-gray-50'>{data.address}</div>
               </div>
               {/* institue and group appear only if they are in one */}
               {data.institute && (
                 <div className='flex flex-row items-center mb-3'>
                   <div className="w-[45%] ml-0">소속 {/** Translation: institute */}</div>
-                  <input className="w-[45%] mr-0 border-1 rounded" type='text' name='institute' value={data.institute} onChange={onChangeHandler} disabled/>
+                  {/* <input className="w-[45%] mr-0 rounded flexible-input" autoComplete='off' type='text' name='institute' value={data.institute} onChange={onChangeHandler} disabled/> */}
+                  <div className='w-[45%] mr-0 flexible-input text-gray-50'>{data.institute}</div>
                 </div>
               )}
               {data.group && (
                 <div className='flex flex-row items-center mb-3'>
                   <div className="w-[45%] ml-0">그룹 {/** Translation: group */}</div>
-                  <input className="w-[45%] mr-0 border-1 rounded" type='text' name='group' value={data.group} onChange={onChangeHandler} disabled/>
+                  {/* <input className="w-[45%] mr-0 rounded flexible-input" autoComplete='off' type='text' name='group' value={data.group} onChange={onChangeHandler} disabled/> */}
+                  <div className='w-[45%] mr-0 flexible-input text-gray-50'>{data.group}</div>
                 </div>
               )}
             </div>
-            <div>
+            <div className='w-full flex justify-center'>
               {/* profile update button activated only if there is any changes otherwise, not activated but still visible as faded out component*/}
-              <button type="submit" className='w-[100%] h-[50px] mt-5 bg-purple-heavy text-white rounded-lg'>프로필 업데이트 {/** Translation: Update Profile */}</button>
-              {/* <button className='w-[100%] h-[50px] mt-5 bg-purple-heavy text-white rounded-lg'>프로필 업데이트 * Translation: Update Profile</button> */}
+              <button type="submit" className='w-[70%] h-[50px] mt-5 bg-gray-10 hover:bg-purple-heavy text-white rounded-lg' style={{transition: '0.2s ease' }}>프로필 업데이트 {/** Translation: Update Profile */}</button>
             </div>
           </form>
           <div className="flex flex-col w-full mt-10">
-            <div className='mt-0 ml-0 text-[25px] text-bold text-purple-heavy'>
+            <div className='mt-0 ml-0 text-[25px] font-bold text-purple-heavy'>
               이용 정보 {/** Translation: Usage Information */}
             </div>
             {/* <div className='flex center items-center ml-0'> */}

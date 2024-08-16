@@ -19,16 +19,6 @@ const storage = multer.diskStorage({
 
 userRouter.post('/register', registerUser);
 userRouter.post('/login', loginUser);
-userRouter.get('/myaccount', async (req, res) => {
-  try {
-    const user = await usermodel.findOne({ email: req.params.email });
-    if (!user) return res.status(404).json({ error: 'User not found' });
-
-    res.json(user);
-  } catch (error) {
-    res.status(500).json({ error: 'Server error' });
-  }
-})
 
 userRouter.post('/upload-audio', upload.single('audioFile'), authMiddleware, async (req, res) => {
   try {
@@ -86,5 +76,33 @@ userRouter.get('/audio-files', authMiddleware, async (req, res) => {
   }
 });
 
- 
+userRouter.get('/myaccount', authMiddleware, async (req, res) => {
+  try {
+    const userId = req.body.userId;
+    console.log('Fetching user details for user:', userId);
+    if (!userId) {
+      return res.status(400).json({ error: 'User ID is missing' });
+    }
+    const user = await usermodel.findById(userId);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    console.log('User found:', user);
+    res.status(200).json({ success:true, 
+      name: user.name,
+      email: user.email,
+      dateofbirth: user.dateofbirth,
+      mobilenumber: user.mobilenumber,
+      gender: user.gender,
+      address: user.address,
+      institute: user.institute,
+      group: user.group,
+     });
+  } catch (error) {
+    console.error('Error fetching user details:', error);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
 export default userRouter;

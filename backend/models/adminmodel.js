@@ -34,15 +34,9 @@ const adminSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    studentlist: {
-        type: [String], // parser is needed to get string from the uploaded csv file.
-        // required: false
-    },
-    groupadmin: {
-        type: [String], // parser is needed to get string from the uploaded csv file.
-        // required: false
-    },
-})
+    studentlist: [{ fileName: String }],
+    groupadmin: [{ fileName: String }],
+}, {minimize: false})
 
 const adminmodel = mongoose.models.admin || mongoose.model('admin', adminSchema);
 
