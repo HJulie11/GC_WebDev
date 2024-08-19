@@ -18,7 +18,7 @@ const Home = () => {
 
   return (
     <>
-      <Navbar isLoggedIn={isLoggedIn}/>
+      <Navbar/>
       <NewsSection/>
       <How_it_works/>
       <FAQ/>

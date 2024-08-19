@@ -1,5 +1,5 @@
 "use client"
-import React, { ChangeEvent, FormEvent, useContext, useState } from 'react'
+import React, { ChangeEvent, Dispatch, FormEvent, useContext, useState } from 'react'
 import dynamic from 'next/dynamic'
 import CSVReader from 'react-csv-reader';
 import { useRouter } from 'next/navigation';
@@ -16,21 +16,32 @@ const AdminRegister: React.FC = () => {
         email: '', // 이메일 (담당자 - 연락 가능한 이메일) {/* Email (Manager - Contactable email) */}
         password: '', // 비밀번호 {/* Password */}
         confirmPassword: '',
-        dateofbirth: '', //생년월일 {/* Date of birth */}
         mobilenumber: '', //전화번호 {/* Mobile number */}
         address: '', //기관 주소 {/* Institution address */}
         institute: '', //기관명 {/* Institution name */}
         group: '', //그룹명 {/* Group name */}
-        registerStudents: '', //등록 학생 {/* registered students */}
-        registerAdmins: '', //그룹 관리자 등록 {/* admins for each group registered */}
+        // studentlist: '', //등록 학생 {/* registered students */}
+        // groupadmin: '', //그룹 관리자 등록 {/* admins for each group registered */}
     });
     const [error, setError] = useState('');
     const [isPostcodeOpen, setIsPostcodeOpen] = useState(false);
-    
+    const [studentlistFile, setStudentlistFile] = useState<File | null>(null);
+    const [groupadminFile, setGroupadminFile] = useState<File | null>(null);
+
+    // const handleChange = (e : ChangeEvent<HTMLInputElement>) => {
+    //     const name = e.target.name;
+    //     const value = e.target.value;
+    //     setFormData(data => ({ ...data, [name]: value }));
+    // };
     const handleChange = (e : ChangeEvent<HTMLInputElement>) => {
-        const name = e.target.name;
-        const value = e.target.value;
-        setFormData(data => ({ ...data, [name]: value }));
+        const { name, value } = e.target;
+        setFormData(prevData => ({ ...prevData, [name]: value }));
+    };
+
+    const handleFileChange = (e: ChangeEvent<HTMLInputElement>, setFile: Dispatch<React.SetStateAction<File | null >>) => {
+        if (e.target.files) {
+            setFile(e.target.files[0]);
+        }
     };
 
 
@@ -55,14 +66,14 @@ const AdminRegister: React.FC = () => {
         setIsPostcodeOpen(false);
     };
 
-    const handleFileLoad = async (data: any) => {
-        
-        setFormData({
-            ...formData,
-            registerStudents: data,
-            registerAdmins: data,
-        });
-    };
+    // const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    //     if (e.target.files) {
+    //         const file = e.target.files[0];
+    //         const fileURL = URL.createObjectURL(file);
+    //         setFormData({ ...formData, studentlist: fileURL });
+    //         setFormData({ ...formData, groupadmin: fileURL });
+    //     }
+    // };
 
     const handleSubmit = async (e : FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -76,8 +87,30 @@ const AdminRegister: React.FC = () => {
         console.log('Form data:', formData);
         console.log('Request URL:', newUrl);
 
+        const formDataToSend = new FormData();
+        formDataToSend.append('adminname', formData.adminname);
+        formDataToSend.append('email', formData.email);
+        formDataToSend.append('password', formData.password);
+        formDataToSend.append('mobilenumber', formData.mobilenumber);
+        formDataToSend.append('address', formData.address);
+        formDataToSend.append('institute', formData.institute);
+        formDataToSend.append('group', formData.group);
+
+        if (studentlistFile) {
+            formDataToSend.append('studentlist', studentlistFile);
+        }
+
+        if (groupadminFile) {
+            formDataToSend.append('groupadmin', groupadminFile);
+        }
+
         try {
-            const response = await axios.post(newUrl, formData);
+            // const response = await axios.post(newUrl, formData);
+            const response = await axios.post(newUrl, formDataToSend, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
             console.log('Response:', response);
 
             if (response.data.success) {
@@ -219,11 +252,25 @@ const AdminRegister: React.FC = () => {
                     )}
                     <div className='mb-4'> {/* 학생 파일 업로드 */}
                         <label className="block text-[18px] mb-2" htmlFor="registerStudents">학생 등록하기: <span className='text-[15px] text-gray-20'> 학생 정보를 업로드하려면 CSV 파일을 업로드하십시오. {/* Upload a CSV file to upload student information. */}</span></label>
-                        <CSVReader inputName="registerStudent" onFileLoaded={handleFileLoad} />
+                        {/* <CSVReader inputName="registerStudent" onFileLoaded={handleFileLoad} /> */}
+                        <input
+                            type="file"
+                            id="registerStudents"
+                            name="studentlist"
+                            accept=".csv"
+                            onChange={(e) => handleFileChange(e, setStudentlistFile)}
+                        />
                     </div>
                     <div className='mb-4'> {/* 그룹 관리자 파일 업로드 */}
                         <label className="block text-[18px] mb-2" htmlFor="registerAdmins">그룹별 관리자 등록하기: <span className='text-[15px] text-gray-20'> 그룹별 관리자 정보를 업로드하려면 CSV 파일을 업로드하십시오. {/* Upload a CSV file to upload student information. */}</span></label>
-                        <CSVReader inputName="registerAdmins" onFileLoaded={handleFileLoad} />
+                        {/* <CSVReader inputName="registerAdmins" onFileLoaded={handleFileLoad} /> */}
+                        <input
+                            type="file"
+                            id="registerAdmins"
+                            name="groupadmin"
+                            accept=".csv"
+                            onChange={(e) => handleFileChange(e, setGroupadminFile)}
+                        />
                     </div>
                     <div className="mt-10 mb-6">
                         <button
