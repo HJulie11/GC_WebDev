@@ -27,12 +27,6 @@ app.use('/api/user', userRouter) // require('./routes/userRoute.js')
 app.use('/api/admin', adminRouter) // require('./routes/adminRoute.js')
 app.use('/audioFiles', express.static('uploads'))
 
-// character encoding
-app.use((req, res, next) => {
-    res.setHeader('Content-Type', 'application/json; charset=utf-8');
-    next();
-  });
-
 app.get('/', (req, res) => {
     res.send('API Working')
 })

@@ -1,5 +1,4 @@
 import React, { createContext, useState, useEffect } from 'react';
-import LocalStorage from '@/constants/localstorage';
 
 interface StoreContextProps {
   url: string;
@@ -15,10 +14,10 @@ export const storeContext = createContext<StoreContextProps>({
 
 const StoreContextProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const url = 'http://localhost:4000';
-  const [token, setToken] = useState<string>(LocalStorage.getItem('token') || '');
+  const [token, setToken] = useState<string>(localStorage.getItem('token') || '');
 
   useEffect(() => {
-    const localToken = LocalStorage.getItem('token');
+    const localToken = localStorage.getItem('token');
     if (localToken) {
       setToken(localToken);
       console.log('Token found in localStorage:', localToken);

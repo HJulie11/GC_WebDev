@@ -14,18 +14,15 @@ const adminSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    dateofbirth: {
+        type: String,
+        required: true
+    },
     mobilenumber: {
         type: String,
         required: true
     },
     address: {
-        type: String,
-        required: true
-    },
-    position: {
-        type: String
-    },
-    registerDate:{
         type: String,
         required: true
     },
@@ -35,21 +32,11 @@ const adminSchema = new mongoose.Schema({
     },
     group: {
         type: String,
-        // required: true
+        required: true
     },
-    studentlist: {
-        type: Array,
-        required: false
-    },
-    studentnumber: {
-        type: Number,
-        default: 0
-    },
-    groupadmin: {
-        type: Array,
-        required: false
-    },
-}, {minimize: false}, {timestamps: true});
+    studentlist: [{ fileName: String }],
+    groupadmin: [{ fileName: String }],
+}, {minimize: false})
 
 const adminmodel = mongoose.models.admin || mongoose.model('admin', adminSchema);
 

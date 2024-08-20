@@ -7,16 +7,15 @@ import authMiddleware from '../middleware/auth.js';
 const userRouter = express.Router();
 
 const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'uploads/');
-  },
-  filename: function (req, file, cb) {
-    const fileName = Buffer.from(file.originalname, 'latin1').toString('utf8');
-    cb(null, `${Date.now()}${fileName}`); // Appending extension
-  }
-});
+    destination: function (req, file, cb) {
+      cb(null, 'uploads/');
+    },
+    filename: function (req, file, cb) {
+      cb(null, `${Date.now()}${file.originalname}`); // Appending extension
+    }
+  });
 
-const upload = multer({ storage: storage });
+  const upload = multer({ storage: storage });
 
 userRouter.post('/register', registerUser);
 userRouter.post('/login', loginUser);
@@ -38,7 +37,7 @@ userRouter.post('/upload-audio', upload.single('audioFile'), authMiddleware, asy
     const updatedUser = await usermodel.findByIdAndUpdate(userId, {
       $push: {
         audioList: {
-          fileName: Buffer.from(file.originalname, 'latin1').toString('utf8')
+          fileName: file.originalname
         },
       },
     }, { new: true });

@@ -13,14 +13,12 @@ const AdminAccount = () => {
         adminname: '',
         email: '',
         password: '',
+        dateofbirth: '',
         mobilenumber: '',
         address: '',
-        position: '',
-        registerDate: '',
         institute: '',
         group: '',
         studentlist: '',
-        studentnumber: 0,
         groupadmin: ''
     });
     // useEffect(() => {
@@ -55,14 +53,12 @@ const AdminAccount = () => {
                     adminname: response.data.adminname,
                     email: response.data.email,
                     password: response.data.password,
+                    dateofbirth: response.data.dateofbirth,
                     mobilenumber: response.data.mobilenumber,
                     address: response.data.address,
-                    position: response.data.position,
-                    registerDate: response.data.registerDate,
                     institute: response.data.institute,
                     group: response.data.group,
                     studentlist: response.data.studentlist,
-                    studentnumber: response.data.studentnumber,
                     groupadmin: response.data.groupadmin
                 }
     
@@ -92,7 +88,7 @@ const AdminAccount = () => {
                             <h1 className='text-purple-heavy text-[20px] mr-2'>{data.adminname}</h1>
                             <button className='text-gray-30 text-[20px]'>✐</button>
                         </div>
-                        <div className='text-[14px] text-gray-30 mt-2'>{/* TODO */}가입일자: {data.registerDate} {/* registration date */}</div>
+                        <div className='text-[14px] text-gray-30 mt-2'>{/* TODO */}가입일자: yyyy.mm.dd {/* registration date */}</div>
                     </div>
                 </div>
                 <div className='w-[65%] p-3'>
@@ -127,7 +123,7 @@ const AdminAccount = () => {
                                 </tr>
                                 <tr>
                                     <td className='mb-5 w-[30%] p-3 ml-0 text-gray-50'>직책{/** TODO: position */}</td>
-                                    <td className='mb-5 w-[70%] p-3 ml-0'>{data.position}</td>
+                                    <td className='mb-5 w-[70%] p-3 ml-0'>관리자</td>
                                 </tr>
                                 <tr>
                                     <td className='mb-5 w-[30%] p-3 ml-0 text-gray-50'>담당자 이름{/** person in charge (institute admin) Name */}</td>
@@ -147,7 +143,7 @@ const AdminAccount = () => {
                                 </tr>
                                 <tr>
                                     <td className='mb-5 w-[30%] p-3 ml-0 text-gray-50'>가입학생 수 {/** number of student registered*/}</td>
-                                    <td className='flex flex-row w-[70%] p-3'><div>{data.studentnumber}</div><a href='\studentadmin' className='flex text-[15px] text-gray-30 ml-5 center items-center'> ▶︎ 학생 관리 바로가기 {/* go to student admin page */}</a> </td>
+                                    <td className='flex flex-row w-[70%] p-3'><div>100명</div><a href='\studentadmin' className='flex text-[15px] text-gray-30 ml-5 center items-center'> ▶︎ 학생 관리 바로가기 {/* go to student admin page */}</a> </td>
                                 </tr>
                             </tbody>
                         </table>
