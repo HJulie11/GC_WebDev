@@ -1,5 +1,5 @@
 import express from 'express'; 
-import { loginAdmin, registerAdmin } from '../controllers/adminController.js';
+import { loginAdmin, registerAdmin } from '../controllers/admincontroller.js';
 import adminModel from '../models/adminmodel.js';
 import multer from 'multer';
 import authMiddleware from '../middleware/auth.js';
@@ -17,7 +17,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-adminRouter.post('/register', registerAdmin);
+adminRouter.post('/register', upload.fields([{ name: 'studentlist', maxCount: 1 }, { name: 'groupadmin' , maxCount: 1 }]), registerAdmin);
 adminRouter.post('/login', loginAdmin);
 adminRouter.get('/myaccount', authMiddleware, async (req, res) => {
     try {
@@ -35,12 +35,14 @@ adminRouter.get('/myaccount', authMiddleware, async (req, res) => {
       res.status(200).json({ success:true, 
         adminname: user.adminname,
         email: user.email,
-        dateofbirth: user.dateofbirth,
         mobilenumber: user.mobilenumber,
         address: user.address,
+        position: user.position,
+        registerDate: user.registerDate,
         institute: user.institute,
         group: user.group,
         studentlist: user.studentlist,
+        studentnumber: user.studentnumber,
         groupadmin: user.groupadmin
        });
     } catch (error) {
