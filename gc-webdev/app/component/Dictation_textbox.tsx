@@ -1,16 +1,29 @@
-"use client"
-import { SetStateAction, useState } from 'react';
+"use client";
+import { SetStateAction, useState, useEffect } from 'react';
 
-const Dictation_textbox = () => {
-    const [value, setValue] = useState('');
-
-  const handleChange = (e: { target: { value: SetStateAction<string>; }; }) => {
-    setValue(e.target.value);
-  };
-
-  return (
-    <textarea className='w-full h-[90%] rounded-lg border-2 border-grey-30' value={value} onChange={handleChange} placeholder="Enter text here"/>
-  )
+interface DictationTextboxProps {
+  value?: string;
 }
 
-export default Dictation_textbox
+const Dictation_textbox: React.FC<DictationTextboxProps> = ({ value = '' }) => {
+  const [currentValue, setCurrentValue] = useState(value);
+
+  const handleChange = (e: { target: { value: SetStateAction<string> } }) => {
+    setCurrentValue(e.target.value);
+  };
+
+  useEffect(() => {
+    setCurrentValue(value);
+  }, [value]);
+
+  return (
+    <textarea
+      className='w-full h-[90%] rounded-lg border-2 border-grey-30'
+      value={currentValue}
+      onChange={handleChange}
+      placeholder="Enter text here"
+    />
+  );
+};
+
+export default Dictation_textbox;
