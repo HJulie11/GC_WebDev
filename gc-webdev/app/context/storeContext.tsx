@@ -8,13 +8,13 @@ interface StoreContextProps {
 }
 
 export const storeContext = createContext<StoreContextProps>({
-  url: 'http://localhost:4000',
+  url: 'https://backend-4ggoogqcc-hjulies-projects.vercel.app',
   token: '',
   setToken: () => {}
 });
 
 const StoreContextProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const url = 'http://localhost:4000';
+  const url = 'https://backend-4ggoogqcc-hjulies-projects.vercel.app';
   const [token, setToken] = useState<string>(LocalStorage.getItem('token') || '');
 
   useEffect(() => {
