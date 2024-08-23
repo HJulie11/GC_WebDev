@@ -82,7 +82,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '16'
+          node-version: '18'
 
       - name: Install dependencies using npm
         working-directory: ./gc-webdev  # Adjust to your frontend directory if necessary
