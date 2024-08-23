@@ -1,6 +1,6 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
 
 /* * {
   margin: 0;
@@ -82,9 +82,15 @@ body {
 
 @layer utilities {
   .btn_white { 
-    @apply  border-white bg-white px-8 py-3 text-green-50
+    border-color: white;
+    background-color: white;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    color: green-50;
   }
-  .btn_white_text  { 
+  /* .btn_white_text  { 
     @apply  border-white bg-white px-8 py-3 text-gray-90
   }
   .btn_green  { 
@@ -119,7 +125,7 @@ body {
 
   .flexEnd {
     @apply flex items-center justify-end;
-  }
+  } */
 
   /* FONTS */
   /* .regular-64 {
@@ -191,24 +197,24 @@ body {
   } */
 
   /* Hero */
-  .hero-map {
+  /* .hero-map {
     @apply absolute right-0 top-0 h-screen w-screen bg-pattern-2 bg-cover bg-center md:-right-28 xl:-top-60;
   }
 
   /* Camp */
-  .camp-quote {
+  /* .camp-quote {
     @apply absolute -right-6 bottom-4 w-[140px] lg:bottom-10 xl:-right-8 xl:w-[186px] 3xl:right-0;
-  }
+  } */
 
   /* Feature */
-  .feature-phone {
+  /* .feature-phone {
     @apply absolute top-[13%] z-10 hidden max-w-[1500px] rotate-[15deg] md:-left-16 lg:flex  3xl:left-20;
-  }
+  } */
 
   /* Get App */
-  .get-app {
+  /* .get-app {
     @apply max-container relative flex w-full  flex-col justify-between gap-32 overflow-hidden bg-green-90 bg-pattern bg-cover bg-center bg-no-repeat px-6 py-12 text-white sm:flex-row sm:gap-12 sm:py-24 lg:px-20 xl:max-h-[598px] 2xl:rounded-5xl;
-  }
+  } */
 }
 
 /* Calendar */

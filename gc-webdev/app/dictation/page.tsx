@@ -1,13 +1,11 @@
 "use client";
 
-import React from 'react'
-import Dictation_textbox from '../component/Dictation_textbox'
-import Card from '../component/NewsCard'
-import Link from 'next/link'
-import { useSearchParams } from 'next/navigation'
+import { Suspense } from 'react';
+import Dictation_textbox from '../component/Dictation_textbox';
+import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 
-const DictationPage = () => {
-
+const DictationContent = () => {
   const searchParams = useSearchParams();
   const title = searchParams.get('title') ?? 'Default';
   const url = searchParams.get('url') ?? 'Default';
@@ -17,31 +15,37 @@ const DictationPage = () => {
   const embedUrl = `https://www.youtube.com/embed/${key}`;
 
   return (
-    <>
-        <div className='flex flex-row p-20 h-screen'>
-            <Dictation_textbox />
-            <div className='flex flex-col w-[40%] h-full px-5 center items-center justify-center'>
-              {/* Embed the video */}
-              {(
-                <iframe
-                  width="300"
-                  height="315"
-                  src={embedUrl}
-                  title={title}
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                ></iframe>
-              )}
-              <a href="/correction" className='flex mt-10 w-[170px] h-[50px] p-2 center items-center justify-center rounded-lg bg-purple-middle text-white'><p>제출하기</p> {/*submit*/}</a>
-            </div>
-        </div>
-    </>
-  )
-}
-
-DictationPage.getLayout = function getLayout(page: React.ReactNode) {
-    return page;
+    <div className='flex flex-row p-20 h-screen'>
+      <Dictation_textbox />
+      <div className='flex flex-col w-[40%] h-full px-5 center items-center justify-center'>
+        {/* Embed the video */}
+        <iframe
+          width="300"
+          height="315"
+          src={embedUrl}
+          title={title}
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        ></iframe>
+        <a href="/correction" className='flex mt-10 w-[170px] h-[50px] p-2 center items-center justify-center rounded-lg bg-purple-middle text-white'>
+          <p>제출하기</p> {/*submit*/}
+        </a>
+      </div>
+    </div>
+  );
 };
 
-export default DictationPage
+const DictationPage = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <DictationContent />
+    </Suspense>
+  );
+};
+
+DictationPage.getLayout = function getLayout(page: React.ReactNode) {
+  return page;
+};
+
+export default DictationPage;
