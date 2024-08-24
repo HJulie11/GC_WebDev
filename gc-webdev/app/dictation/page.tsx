@@ -1,12 +1,12 @@
 "use client";
 
-import React from 'react'
+import React, { Suspense } from 'react'
 import Dictation_textbox from '../component/Dictation_textbox'
 import Card from '../component/NewsCard'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 
-const DictationPage = () => {
+const DictationPageContent = () => {
 
   const searchParams = useSearchParams();
   const title = searchParams.get('title') ?? 'Default';
@@ -39,6 +39,14 @@ const DictationPage = () => {
     </>
   )
 }
+
+const DictationPage = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <DictationPageContent />
+    </Suspense>
+  );
+};
 
 DictationPage.getLayout = function getLayout(page: React.ReactNode) {
     return page;
