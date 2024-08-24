@@ -3,7 +3,8 @@ import axios from 'axios';
 import AudioCard from './AudioCard';
 
 interface AudioFile {
-  fileName: string;
+  fileDisplayName: string;
+  fileStorageName: string;
 }
 
 const AudioList: React.FC = () => {
@@ -40,7 +41,7 @@ const AudioList: React.FC = () => {
   return (
     <div>
       {audioFiles.map((file, index) => (
-        <AudioCard key={index} fileName={file.fileName} />
+        <AudioCard key={index} fileDisplayName={file.fileDisplayName} fileStorageName={file.fileStorageName}/>
       ))}
     </div>
   );

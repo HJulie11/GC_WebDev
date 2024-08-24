@@ -42,7 +42,8 @@ const userSchema = new mongoose.Schema({
         type: String
     },
     audioList: [{ 
-        fileName: String 
+        fileDisplayName: String,
+        fileStorageName: String 
     }]
 }, {minimize: false});
 

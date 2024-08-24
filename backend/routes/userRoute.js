@@ -3,7 +3,7 @@ import { loginUser, registerUser } from '../controllers/usercontroller.js';
 import usermodel from '../models/usermodel.js';
 import multer from 'multer';
 import authMiddleware from '../middleware/auth.js';
- 
+
 const userRouter = express.Router();
 
 const storage = multer.diskStorage({
@@ -12,7 +12,7 @@ const storage = multer.diskStorage({
   },
   filename: function (req, file, cb) {
     const fileName = Buffer.from(file.originalname, 'latin1').toString('utf8');
-    cb(null, `${Date.now()}${fileName}`); // Appending extension
+    cb(null, `${Date.now()}_${fileName}`); // Appending timestamp to filename
   }
 });
 
@@ -34,11 +34,16 @@ userRouter.post('/upload-audio', upload.single('audioFile'), authMiddleware, asy
       return res.status(400).send('User ID is missing');
     }
 
+    // Extract the original name and storage name
+    const fileDisplayName = Buffer.from(file.originalname, 'latin1').toString('utf8');
+    const fileStorageName = file.filename;
+
     // Update user audioList
     const updatedUser = await usermodel.findByIdAndUpdate(userId, {
       $push: {
         audioList: {
-          fileName: Buffer.from(file.originalname, 'latin1').toString('utf8')
+          fileDisplayName: fileDisplayName,
+          fileStorageName: fileStorageName
         },
       },
     }, { new: true });
@@ -55,7 +60,6 @@ userRouter.post('/upload-audio', upload.single('audioFile'), authMiddleware, asy
 });
 
 userRouter.get('/audio-files', authMiddleware, async (req, res) => {
-  
   try {
     const userId = req.body.userId;
     console.log('Fetching audio files for user:', userId);
