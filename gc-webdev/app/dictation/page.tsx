@@ -6,6 +6,8 @@ import Card from '../component/NewsCard'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 
+const safeArray = (data: any) => Array.isArray(data) ? data : [];
+
 const DictationPageContent = () => {
 
   const searchParams = useSearchParams();
@@ -28,7 +30,6 @@ const DictationPageContent = () => {
                   height="315"
                   src={embedUrl}
                   title={title}
-                  frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
                 ></iframe>

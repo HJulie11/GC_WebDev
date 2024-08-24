@@ -44,7 +44,7 @@ const News_home = () => {
       <div className="flex flex-row center items-center ml-20 mr-20">
         <div className="w-[15%] font-bold">CNN News</div>
         <div className="w-[85%] h-[320px] items-center flex flex-row overflow-x-auto whitespace-nowrap pl-1">
-          {cnnVideos.map((video) => (
+          {/* {cnnVideos.map((video) => (
             <Link 
               href={{
                 pathname:`/dictation`,
@@ -65,14 +65,14 @@ const News_home = () => {
                 thumbnail={video.snippet.thumbnails.medium.url}
               />
             </Link>
-          ))}
+          ))} */}
         </div>
       </div>
 
       <div className="flex flex-row center items-center ml-20 mr-20">
         <div className="w-[15%] font-bold">BBC News</div>
         <div className="w-[85%] h-[320px] items-center flex flex-row overflow-x-auto whitespace-nowrap pl-1">
-          {bbcVideos.map((video) => (
+          {/* {bbcVideos.map((video) => (
             <Link href={`/dictation`} key={video.id.videoId} passHref>
               <Card
                 key={video.id.videoId}
@@ -81,7 +81,7 @@ const News_home = () => {
                 thumbnail={video.snippet.thumbnails.medium.url}
             />
           </Link>
-          ))}
+          ))} */}
         </div>
       </div>
     </div>
