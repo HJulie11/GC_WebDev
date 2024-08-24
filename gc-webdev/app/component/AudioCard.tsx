@@ -33,7 +33,7 @@ const AudioCard: React.FC<AudioCardProps> = ({ fileDisplayName, fileStorageName 
   }, []);
 
   return (
-    <div onClick={handleClick} className='flex center items-center justify-center mb-2'>
+    <div onClick={handleClick} className='flex center items-center justify-center mb-2 cursor-pointer'>
       <div className='flex flex-col w-[1093px] h-[181px] bg-white border-[1.5px] border-purple-light rounded-[10px]'>
         <div className='text-[25px] font-bold ml-[30.5px] mt-[28px]'>{fileDisplayName}</div>
         <div className='w-[1032px] mt-[20px] ml-[30.5px]'>
