@@ -218,7 +218,31 @@ const CorrectionPageContent = () => {
 
   const initializeUserAnswer = (transcriptText: string, userAnswerText: string) => {
     setUserAnswer(userAnswerText);
+    compareAnswers(transcriptText, userAnswerText)
     // Optionally handle other initializations if needed
+  };
+
+  const compareAnswers = (transcriptText: string, userAnswerText: string) => {
+    const transcriptWords = transcriptText.split(' ');
+    const userAnswerWords = userAnswerText.split(' ');
+    const wrongIndexes = [];
+
+    for (let i = 0; i < transcriptWords.length; i++) {
+      if (userAnswerWords[i] !== transcriptWords[i]) {
+        wrongIndexes.push(i);
+      }
+    }
+
+    setEditableIndexes(wrongIndexes);
+    setInitialWrongIndexes(wrongIndexes);
+    checkIfAllCorrect(transcriptText, userAnswerText);
+  };
+
+  const checkIfAllCorrect = (transcriptText: string, userAnswerText: string) => {
+    const transcriptWords = transcriptText.split(' ');
+    const userAnswerWords = userAnswerText.split(' ');
+    const allCorrect = transcriptWords.every((word, index) => word === userAnswerWords[index]);
+    setAllCorrect(allCorrect);
   };
 
   const handleWordChange = (index: number, event: React.ChangeEvent<HTMLInputElement>) => {
