@@ -287,3 +287,14 @@ body {
   overflow: hidden; /* Hide any overflow */
   text-overflow: ellipsis; /* Show ellipsis for overflowed text */
 }
+
+.textarea-like {
+  width: 100%;           /* Full width of the container */
+  border: 1px solid #ccc; /* Border styling */
+  border-radius: 4px;   /* Rounded corners */
+  background-color: #fff; /* Background color */
+  overflow-y: auto;     /* Scroll vertically if content overflows */
+  overflow-x: hidden;   /* Prevent horizontal scrolling */
+  white-space: pre-wrap; /* Preserve whitespace and wrap text */
+  word-wrap: break-word; /* Break long words */
+}
