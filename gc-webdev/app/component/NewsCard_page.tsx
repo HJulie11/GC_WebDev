@@ -1,7 +1,5 @@
 import React, {useEffect, useState} from 'react'
 import Link from 'next/link'
-import { title } from 'process';
-import { vi } from 'date-fns/locale';
 
 // TODO: make props interface to get different progress bars
 
