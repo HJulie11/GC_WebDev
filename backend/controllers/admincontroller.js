@@ -118,7 +118,14 @@ const parseCSVFile = async (filePath) => {
     return new Promise((resolve, reject) => {
         fs.createReadStream(filePath)
             .pipe(csv())
-            .on('data', (data) => results.push(data))
+            .on('data', (originalData) => {
+                const correctedData = {};
+                Object.keys(originalData).forEach((key) => {
+                    const correctedKey = key.trim().replace(/^'(.*)'$/, '$1').toLowerCase().replace(/\s+/g, '')
+                    correctedData[correctedKey] = originalData[key];
+                });
+                results.push(correctedData)
+            })
             .on('end', () => resolve(results))
             .on('error', (error) => reject(error));
     });
