@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react'
 import NewsCard_page from '../component/NewsCard_page'
 import Navbar from '../component/Navbar'

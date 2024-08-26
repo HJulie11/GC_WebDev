@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
-import Card from './NewsCard'
 import Link from 'next/link'
+import { title } from 'process';
 
 // TODO: make props interface to get different progress bars
 
@@ -34,30 +34,32 @@ const NewsCard_page = () => {
 
   return (
     <>
-      {cnnVideos.map((video) => (
-        <Card
+    {cnnVideos.map((video) => (
+        <Link legacyBehavior
           key={video.id.videoId}
-          title={video.snippet.title}
-          url={`https://www.youtube.com/watch?v=${video.id.videoId}`}
-          thumbnail={video.snippet.thumbnails.medium.url}
-          />
+          href={{
+            pathname: `/dictation`,
+            query: {
+              title: video.snippet.title,
+              url: `https://www.youtube.com/watch?v=${video.id.videoId}`,
+              thumbnail: video.snippet.thumbnails.medium.url,
+              key: video.id.videoId
+            },
+          }}
+          passHref
+          >
+            <a className='flex flex-col w-[320px] shadow-md mr-5 mb-5 rounded-lg'>
+              <div className='w-[320px] h-[180px] rounded-top-right-lg round-top-left-lg'>
+                  <img src={video.snippet.thumbnails.medium.url} alt={video.snippet.title} width={320} height={180} />
+              </div>
+              <div className='w-[300px] flex flex-col'>
+                  <div className='font-semi-bold text-[20px] ml-5 mt-5'>{video.snippet.title}</div>
+                  <div className='w-[250px] h-[10px] rounded-full bg-gray-30 mt-5 ml-5'></div>
+                  <div className='text-[15px] ml-5 mt-5 mb-5'>Not started</div>
+              </div>
+            </a>
+          </Link>
       ))}
-    </>
-  )
-  
-  return (
-    <>
-    <a href='dummyurl' className='flex flex-col w-[320px] shadow-md mr-5 mb-5 rounded-lg'>
-            <div className='w-[320px] h-[180px] rounded-top-right-lg round-top-left-lg'>
-                <img src='dummysource' alt='newstitle' width={320} height={180} />
-            </div>
-            <div className='w-[300px] flex flex-col'>
-                <div className='font-semi-bold text-[20px] ml-5 mt-5'>News title</div>
-                <div className='w-[250px] h-[10px] rounded-full bg-gray-30 mt-5 ml-5'></div>
-                <div className='text-[15px] ml-5 mt-5 mb-5'>Not started</div>
-            </div>
-    </a>
-    
     </>
   )
 }
