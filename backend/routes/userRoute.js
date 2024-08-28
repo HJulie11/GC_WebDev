@@ -89,7 +89,6 @@ userRouter.post('/upload-transcript', upload.single('transcript'), authMiddlewar
   try {
     const userId = req.body.userId;
     const transcript = req.body.transcript;
-    const fileStorageName = req.body.fileStorageName;
 
     if (!transcript) {
       return res.status(400).send('No text provided');
@@ -99,9 +98,9 @@ userRouter.post('/upload-transcript', upload.single('transcript'), authMiddlewar
       return res.status(400).send('User ID is missing');
     }
 
-    if (!fileStorageName) {
-      return res.status(400).send('File name is missing');
-    }
+    // if (!fileStorageName) {
+    //   return res.status(400).send('File name is missing');
+    // }
 
     // Update the user's audioList with the transcript text
     const updatedUser = await usermodel.findOneAndUpdate(userId, {

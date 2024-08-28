@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Suspense } from 'react';
 import Dictation_textbox from '../component/Dictation_textbox';
 import { useSearchParams } from 'next/navigation';
 
-const CorrectionPage = () => {
+const CorrectionPageContent = () => {
   const searchParams = useSearchParams();
   const url = searchParams.get('url') ?? '';
   const [transcript, setTranscript] = useState('');
@@ -45,6 +45,14 @@ const CorrectionPage = () => {
         </div>
       </div>
     </div>
+  );
+};
+
+const CorrectionPage = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <CorrectionPageContent />
+    </Suspense>
   );
 };
 
