@@ -43,8 +43,7 @@ userRouter.post('/upload-audio', upload.single('audioFile'), authMiddleware, asy
       $push: {
         audioList: {
           fileDisplayName: fileDisplayName,
-          fileStorageName: fileStorageName,
-          audioTranscript: '',
+          fileStorageName: fileStorageName
         },
       },
     }, { new: true });
@@ -81,28 +80,6 @@ userRouter.get('/audio-files', authMiddleware, async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 });
-  
-userRouter.get('/upload-transcript', authMiddleware, async (req, res) => {
-  try {
-    const userId = req.body.userId;
-    const { fileStorageName, transcript} = req.body
-
-    const updatedUser = await usermodel.findOneAndUpdate(
-      { _id: userId, "audioList.fileStorageName": fileStorageName },
-      { $set: {"audiolist.$.audioTranscript": transcript } },
-      { new: true }
-    );
-
-    if (!updateduser) {
-      return res.status(404).send('User or audio file not found');
-    }
-
-    res.status(200).json({ message: 'Transcript updated successfully', user: updatedUser});
-  } catch (error) {
-    console.error('Error updating transcript:', error);
-    res.status(500).send(error.message || 'Server error');
-  }
-})
 
 userRouter.get('/myaccount', authMiddleware, async (req, res) => {
   try {
