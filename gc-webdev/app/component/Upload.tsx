@@ -1,9 +1,6 @@
-import React, { useContext, useRef } from 'react';
+import React, { useRef } from 'react';
 import Image from 'next/image';
 import dragDrop from '@/public/drag and drop.svg';
-import LocalStorage from '@/constants/localstorage';
-import axios from 'axios'
-import { storeContext } from '../context/storeContext';
 
 interface UploadProps {
   onUpload: (files: File[]) => void;
@@ -11,7 +8,6 @@ interface UploadProps {
 
 const Upload: React.FC<UploadProps> = ({ onUpload }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
-  // const { url, token } = useContext(storeContext);
 
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -25,28 +21,6 @@ const Upload: React.FC<UploadProps> = ({ onUpload }) => {
       onUpload(files);
     }
   };
-
-  // const handleUploadAudio = async (files: File[]) => {
-  //   // const token = LocalStorage.getItem('token')
-  //   const formData = new FormData();
-
-  //   files.forEach(file => {
-  //     formData.append('audioFile', file);
-  //   });
-
-  //   try {
-  //     const response = await axios.post(`${url}/api/user/upload-audio`, formData, {
-  //       headers: {
-  //         'Content-Type': 'multipart/form-data',
-  //         'Authorization': `Bearer ${token}`,
-  //       },
-  //     });
-
-  //     console.log('Files uploaded successfully', response.data);
-  //   } catch (error) {
-  //     console.error('Error uploading files:', error);
-  //   }
-  // }
 
   return (
     <div

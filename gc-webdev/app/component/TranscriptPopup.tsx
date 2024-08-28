@@ -1,19 +1,47 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
+import { storeContext } from '../context/storeContext'
+import axios from 'axios'
 
 interface TranscriptPopupProps {
     fileStorageName: string;
-    currentTranscript?: string;
-    onClose: () => void
-    onSave: (newTranscript: string) => void
+    onClose: () => void;
+    userId: string;
 }
 
-const TranscriptPopup: React.FC<TranscriptPopupProps> = ({ fileStorageName, currentTranscript, onClose, onSave }) => {
-    const [transcript, setTranscript] = useState<string>(currentTranscript || '');
+const TranscriptPopup: React.FC<TranscriptPopupProps> = ({ fileStorageName, onClose, userId }) => {
+    const [transcript, setTranscript] = useState('');
+    const { token, url } = useContext(storeContext);
 
-    const handleSave = () => {
-        onSave(transcript);
-        onClose();
-    };
+
+    const handleTranscriptSubmit = async () => {
+        try {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                console.error('Token is missing');
+                return;
+            }
+
+            const response = await axios.post(`${url}/api/user/upload-transcript`, {
+                // userId,
+                fileStorageName,
+                transcript,
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (response.status === 200) {
+                console.log('Transcript uploaded successfully:', response.data.message);
+                onClose();
+            } else {
+                console.error('Failed to upload transcript:', response.data.message);
+            }
+        } catch (error) {
+            console.error('Error uploading transcript:', error);
+        }
+    }
 
 
     return (
@@ -27,10 +55,10 @@ const TranscriptPopup: React.FC<TranscriptPopupProps> = ({ fileStorageName, curr
                 className="w-full h-[90%] p-2 border border-gray-300 rounded"
             />
             <div className="flex justify-end mt-4">
-            <button className="mr-2 px-4 py-2 bg-gray-300 rounded" onClick={onClose}>
+            <button className="mr-2 px-4 py-2 bg-gray-300 rounded-lg" onClick={onClose}>
                 Cancel
             </button>
-            <button className="px-4 py-2 bg-purple-heavy text-white rounded" onClick={handleSave}>
+            <button className="px-4 py-2 bg-purple-heavy text-white rounded-lg" onClick={handleTranscriptSubmit}>
                 Save Transcript
             </button>
             </div>
