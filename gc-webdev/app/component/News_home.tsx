@@ -24,14 +24,14 @@ const News_home = () => {
 
   useEffect(() => {
     fetch(
-      "https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=UCupvZG-5ko_eiXAupbDfxWw&maxResults=10&order=date&key=AIzaSyDpref1bV9m7s7igwJqZG1JhC_gsXX60L0"
+      "https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=UCupvZG-5ko_eiXAupbDfxWw&maxResults=10&order=date&key=AIzaSyC9xzdwpLokZiHo9JFXFpTHFVoLCu1o5ak"
     )
       .then((response) => response.json())
       .then((data) => {
         setCnnVideos(data.items);
       });
     fetch(
-      "https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=UC16niRr50-MSBwiO3YDb3RA&maxResults=10&order=date&key=AIzaSyDpref1bV9m7s7igwJqZG1JhC_gsXX60L0"
+      "https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=UC16niRr50-MSBwiO3YDb3RA&maxResults=10&order=date&key=AIzaSyC9xzdwpLokZiHo9JFXFpTHFVoLCu1o5ak"
     )
       .then((response) => response.json())
       .then((data) => {
@@ -57,7 +57,7 @@ const News_home = () => {
                 }}
               key={video.id.videoId} 
               passHref
-              >
+            >
               <Card
                 key={video.id.videoId}
                 title={video.snippet.title}
@@ -79,8 +79,8 @@ const News_home = () => {
                 title={video.snippet.title}
                 url={`https://www.youtube.com/watch?v=${video.id.videoId}`}
                 thumbnail={video.snippet.thumbnails.medium.url}
-            />
-          </Link>
+              />
+            </Link>
           ))}
         </div>
       </div>
