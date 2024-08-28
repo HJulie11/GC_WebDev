@@ -197,19 +197,26 @@ const CorrectionPageContent = () => {
 
   useEffect(() => {
     const getTranscript = async () => {
-      if (url) {
-        try {
-          const response = await fetch(`http://localhost:4000/api/transcript?url=${encodeURIComponent(url)}`);
-          if (response.ok) {
-            const data = await response.json();
-            setTranscript(data.transcript);
-            initializeUserAnswer(data.transcript, userAnswerFromParams);
-          } else {
-            console.error('Error fetching transcript:', response.statusText);
+      const cardType = searchParams.get('cardType')
+      if (cardType === 'news') {
+        if (url) {
+          try {
+            const response = await fetch(`http://localhost:4000/api/transcript?url=${encodeURIComponent(url)}`);
+            if (response.ok) {
+              const data = await response.json();
+              setTranscript(data.transcript);
+              initializeUserAnswer(data.transcript, userAnswerFromParams);
+            } else {
+              console.error('Error fetching transcript:', response.statusText);
+            }
+          } catch (error) {
+            console.error('Error fetching transcript:', error);
           }
-        } catch (error) {
-          console.error('Error fetching transcript:', error);
         }
+      } else if (cardType === 'audio') {
+        const manualTranscript = searchParams.get('manualTranscript') ?? 'Default manual transcript for audio';
+        setTranscript(manualTranscript);
+        initializeUserAnswer(manualTranscript, userAnswerFromParams)
       }
     };
 

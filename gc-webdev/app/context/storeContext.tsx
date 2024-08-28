@@ -8,13 +8,13 @@ interface StoreContextProps {
 }
 
 export const storeContext = createContext<StoreContextProps>({
-  url: 'https://gc-web-dev-2om6-git-backend-attempt3-hjulies-projects.vercel.app?_vercel_share=cBTXssjx3fXENkvIRn2gzO1ib5RZG91J',
+  url: 'http://localhost:4000',
   token: '',
   setToken: () => {}
 });
 
 const StoreContextProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const url = 'https://gc-web-dev-2om6-git-backend-attempt3-hjulies-projects.vercel.app?_vercel_share=cBTXssjx3fXENkvIRn2gzO1ib5RZG91J';
+  const url = 'http://localhost:4000';
   const [token, setToken] = useState<string>(LocalStorage.getItem('token') || '');
 
   useEffect(() => {

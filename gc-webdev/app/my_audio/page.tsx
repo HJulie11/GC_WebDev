@@ -1,11 +1,15 @@
 "use client"
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import Upload from '../component/Upload';
 import AudioList from '../component/AudioList';
 import MainLayout from '../component/MainLayout';
+import { storeContext } from '../context/storeContext';
 
 const Page = () => {
+  const [uploadSuccess, setUploadSuccess] = useState(false);
+  const { token } = useContext(storeContext);
+
   const handleUpload = async (files: File[]) => {
     try {
       const formData = new FormData();
@@ -13,7 +17,7 @@ const Page = () => {
         formData.append('audioFile', file);
       });
 
-      const token = localStorage.getItem('token');
+      // const token = localStorage.getItem('token');
       console.log('Token:', token);
       if (!token) {
         console.error('Token is missing');
@@ -22,13 +26,16 @@ const Page = () => {
 
       const response = await axios.post("http://localhost:4000/api/user/upload-audio", formData, {
         headers: {
-          'token': token,
+          // 'token': token,
+          // 'Content-Type': 'multipart/form-data',
+          'Authorization': `Bearer ${token}`,
           'Content-Type': 'multipart/form-data',
         },
       });
 
-      if (response.data.success) {
+      if (response.status === 200 && response.data.success) {
         console.log('Files uploaded successfully:', response.data.message);
+        setUploadSuccess(true);
       } else {
         console.error('Failed to upload files:', response.data.message);
       }
