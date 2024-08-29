@@ -44,8 +44,8 @@ const Profile: React.FC = () => {
         const response = await axios.get(`${url}/api/user/myaccount`, { 
           headers: { 
             'token': token,
-            'Content-Type': `application/json`,
-            'ngrok-skip-browser-warning': '69420',
+            'Content-Type': `application/json`
+            // 'ngrok-skip-browser-warning': '69420',
            },
         });
         

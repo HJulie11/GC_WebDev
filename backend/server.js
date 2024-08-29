@@ -11,10 +11,10 @@ import { YoutubeTranscript } from 'youtube-transcript';
 const app = express()
 const port = 4000
 const corsOptions = {
-  origin: 'https://gc-web-dev-2om6-7rcdgmjb1-hjulies-projects.vercel.app', // Replace with your frontend URL
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'token'], // Include 'token' here
-  credentials: true,
+  origin: 'https://gc-web-dev-2om6-51sn61nzh-hjulies-projects.vercel.app', // Replace with your frontend URL
+  // methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'ngrok-skip-browser-warning'], // Include 'token' here
+  // credentials: true,
 };
  
 //MIDDLEWARE
