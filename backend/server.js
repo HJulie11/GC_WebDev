@@ -14,6 +14,11 @@ const port = 4000
 //MIDDLEWARE
 app.use(express.json())
 app.use(cors())
+const corsOptions = {
+  origin: 'https://4fa3-222-117-147-237.ngrok-free.app', // Frontend URL
+  methods: 'GET,POST,PUT,DELETE',
+  credentials: true,
+};
 app.use(express.static('uploads'));
 
 // Middleware to parse JSON bodies
