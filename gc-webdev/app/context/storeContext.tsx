@@ -8,13 +8,13 @@ interface StoreContextProps {
 }
 
 export const storeContext = createContext<StoreContextProps>({
-  url: 'http://localhost:4000',
+  url: 'https://2e1c-222-117-147-237.ngrok-free.app',
   token: '',
   setToken: () => {}
 });
 
 const StoreContextProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const url = 'http://localhost:4000';
+  const url = 'https://2e1c-222-117-147-237.ngrok-free.app';
   const [token, setToken] = useState<string>(LocalStorage.getItem('token') || '');
 
   useEffect(() => {
