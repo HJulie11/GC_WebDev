@@ -42,7 +42,11 @@ const Profile: React.FC = () => {
         }
         
         const response = await axios.get(`${url}/api/user/myaccount`, { 
-          headers: { 'token': token },
+          headers: { 
+            'token': token,
+            'Content-Type': `application/json`,
+            'ngrok-skip-browser-warning': '69420',
+           },
         });
         
         console.log('Response data:', response.data); // Debugging line
@@ -82,9 +86,9 @@ const Profile: React.FC = () => {
         formData.append('image', image);
         const response = await axios.put(`${url}/user/updateProfile`, formData, {
           headers: {
-            // 'Content-Type': 'multipart/form-data',
-            'Content-Type': `application/json`,
-            'ngrok-skip-browser-warning': '69420',
+            'Content-Type': 'multipart/form-data',
+            // 'Content-Type': `application/json`,
+            // 'ngrok-skip-browser-warning': '69420',
           },
         });
 

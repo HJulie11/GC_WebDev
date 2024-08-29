@@ -10,15 +10,16 @@ import { YoutubeTranscript } from 'youtube-transcript';
 // APP CONFIG
 const app = express()
 const port = 4000
+const corsOptions = {
+  origin: 'https://gc-web-dev-2om6-7rcdgmjb1-hjulies-projects.vercel.app', // Replace with your frontend URL
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'token'], // Include 'token' here
+  credentials: true,
+};
  
 //MIDDLEWARE
 app.use(express.json())
-app.use(cors())
-const corsOptions = {
-  origin: 'https://4fa3-222-117-147-237.ngrok-free.app', // Frontend URL
-  methods: 'GET,POST,PUT,DELETE',
-  credentials: true,
-};
+app.use(cors(corsOptions))
 app.use(express.static('uploads'));
 
 // Middleware to parse JSON bodies
