@@ -22,6 +22,8 @@ const AudioList: React.FC = () => {
         const response = await axios.get('http://localhost:4000/api/user/audio-files', {
           headers: {
             'token': token,
+            'Content-Type': `application/json`,
+            'ngrok-skip-browser-warning': '69420',
           },
         });
 

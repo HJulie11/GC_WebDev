@@ -82,7 +82,9 @@ const Profile: React.FC = () => {
         formData.append('image', image);
         const response = await axios.put(`${url}/user/updateProfile`, formData, {
           headers: {
-            'Content-Type': 'multipart/form-data',
+            // 'Content-Type': 'multipart/form-data',
+            'Content-Type': `application/json`,
+            'ngrok-skip-browser-warning': '69420',
           },
         });
 
