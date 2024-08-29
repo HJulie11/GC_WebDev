@@ -35,7 +35,7 @@ const Profile: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const token = localStorage.getItem('token');
+        const token = LocalStorage.getItem('token');
         if (!token) {
           console.error('Token is missing');
           return;
@@ -43,9 +43,11 @@ const Profile: React.FC = () => {
         
         const response = await axios.get(`${url}/api/user/myaccount`, { 
           headers: { 
+            // 'Authorization': `Bearer ${token}`,
             'token': token,
-            'Content-Type': `application/json`
-            // 'ngrok-skip-browser-warning': '69420',
+            'Content-Type': `application/json`,
+            'ngrok-skip-browser-warning': '69420',
+            // 'Access-Control-Allow-Origin': '*'
            },
         });
         
