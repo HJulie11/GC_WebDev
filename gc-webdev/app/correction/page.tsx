@@ -13,7 +13,7 @@ const CorrectionPageContent = () => {
     const getTranscript = async () => {
       if (url) {
         try {
-          const response = await fetch(`http://localhost:4000/api/transcript?url=${encodeURIComponent(url)}`);
+          const response = await fetch(`${url}/api/transcript?url=${encodeURIComponent(url)}`);
           if (response.ok) {
             const data = await response.json();
             setTranscript(data.transcript);
