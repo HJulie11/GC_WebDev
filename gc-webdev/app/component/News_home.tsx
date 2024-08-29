@@ -60,7 +60,7 @@ const News_home = () => {
               {cnnVideos.map((video) => (
                 <Link
                   href={{
-                    pathname: `/dictation`,
+                    pathname: `/dictation_level_one`,
                     query: {
                       title: video.snippet.title,
                       url: `https://www.youtube.com/watch?v=${video.id.videoId}`,
