@@ -267,4 +267,34 @@ body {
   color: #0070f3;
 }
 
+.circle {
+  width: 50%; /* 50% of the parent div's width */
+  height: 50%; /* Same as width to make it a perfect square */
+  border-radius: 50%; /* Makes the div a circle */
+  position: absolute; /* Position the circle within the parent */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Center the circle within the parent */
+}
 
+.flexible-input {
+  width: 100%; /* Full width of its container */
+  min-width: 200px; /* Minimum width to ensure usability */
+  max-width: 100%; /* Prevent excessive stretching */
+  padding: 8px; /* Add some padding */
+  box-sizing: border-box; /* Include padding in width calculation */
+  white-space: nowrap; /* Prevent text wrapping */
+  overflow: hidden; /* Hide any overflow */
+  text-overflow: ellipsis; /* Show ellipsis for overflowed text */
+}
+
+.textarea-like {
+  width: 100%;           /* Full width of the container */
+  border: 1px solid #ccc; /* Border styling */
+  border-radius: 4px;   /* Rounded corners */
+  background-color: #fff; /* Background color */
+  overflow-y: auto;     /* Scroll vertically if content overflows */
+  overflow-x: hidden;   /* Prevent horizontal scrolling */
+  white-space: pre-wrap; /* Preserve whitespace and wrap text */
+  word-wrap: break-word; /* Break long words */
+}

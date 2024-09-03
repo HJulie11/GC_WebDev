@@ -3,6 +3,7 @@ import GraphIcon from '@/public/Graph.png'
 import ManageIcon from '@/public/manage.png'
 import LandfillIcon from '@/public/landfill.png'
 
+
 // NAVIGATION
 export const NAV_LINKS = [
   { href: '/', key: 'home', label: 'Home' },

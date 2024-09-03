@@ -1,17 +1,20 @@
-import React from 'react'
-import LogIn from '../component/LogIn'
+"use client"
+import React, { useState } from 'react'
 import AdminLogin from '../component/AdminLogin';
+import StoreContextProvider from '../context/storeContext';
 
-const LogInPage = () => {
+
+const AdminLogInPage: React.FC = () => {
+    const [email, setEmail] = useState<string>(""); // Initialize with an empty string
+    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+
     return (
-        <div className='flex center items-center justify-center h-screen'>
-            <AdminLogin />
-        </div>
+        <StoreContextProvider>
+            <div className='flex center items-center justify-center h-screen'>
+                <AdminLogin />
+            </div>
+        </StoreContextProvider>
     )
 }
 
-// LogInPage.getLayout = function getLayout(page: any){
-//     return <LogInLayout>{page}</LogInLayout>;
-// }
-
-export default LogInPage;
+export default AdminLogInPage;

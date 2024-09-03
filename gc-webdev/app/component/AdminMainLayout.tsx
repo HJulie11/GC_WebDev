@@ -1,27 +1,26 @@
 "use client"
-import React from 'react'
+import React, { useEffect } from 'react'
 import AdminNavbar from './AdminNavbar'
 import AdminFooter from './AdminFooter'
+import '../globals.css'
 
-const AdminMainLayout = ({children}: {children: React.ReactNode}) => {
-    const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+export default function AdminMainLayout({ children }: { children: React.ReactNode }) {
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            console.log('Token found in localStorage:', token);
+        }
+    }, [])
 
-    const handleLogin = () => {
-        setIsLoggedIn(true);
-    }
-    
     return (
         <html>
             <body>
                 <div>
-                    <AdminNavbar isLoggedIn={isLoggedIn} />
+                    <AdminNavbar />
                     <main>{children}</main>
                     <AdminFooter />
                 </div>
-            </body>    
+            </body>
         </html>
-    
-  )
+    )
 }
-
-export default AdminMainLayout
