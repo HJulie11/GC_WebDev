@@ -10,23 +10,24 @@ const CorrectionPage = () => {
   const [transcript, setTranscript] = useState('');
 
   useEffect(() => {
-    const getTranscript = async () => {
-      if (url) {
-        try {
-          const response = await fetch(`http://localhost:4000/api/transcript?url=${encodeURIComponent(url)}`);
-          if (response.ok) {
-            const data = await response.json();
-            setTranscript(data.transcript);
-          } else {
-            console.error('Error fetching transcript:', response.statusText);
-          }
-        } catch (error) {
-          console.error('Error fetching transcript:', error);
-        }
-      }
-    };
+    // const getTranscript = async () => {
+    //   if (url) {
+    //     try {
+    //       const response = await fetch(`http://localhost:4000/api/transcript?url=${encodeURIComponent(url)}`);
+    //       if (response.ok) {
+    //         const data = await response.json();
+    //         setTranscript(data.transcript);
+    //       } else {
+    //         console.error('Error fetching transcript:', response.statusText);
+    //       }
+    //     } catch (error) {
+    //       console.error('Error fetching transcript:', error);
+    //     }
+    //   }
+    // }
+    // getTranscript();
 
-    getTranscript();
+    setTranscript(url);
   }, [url]);
 
   return (
