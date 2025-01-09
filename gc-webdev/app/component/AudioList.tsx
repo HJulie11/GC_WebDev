@@ -28,6 +28,8 @@ const AudioList: React.FC = () => {
           },
         });
 
+        console.log(response)
+
         setAudioFiles(response.data.audioFiles);
       } catch (error) {
         console.error('Error fetching audio files:', error);

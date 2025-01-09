@@ -10,10 +10,21 @@ import { YoutubeTranscript } from 'youtube-transcript';
 // APP CONFIG
 const app = express()
 const port = 4000
+// const cors = require('cors');
  
 //MIDDLEWARE
 app.use(express.json())
-app.use(cors())
+
+const corsOptions = {
+    origin: ['https://www.gyeongcheong.com', 'http://localhost:3000'],
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+    optionsSuccessStatus: 204
+  };
+  
+app.use(cors(corsOptions));
+// app.use(cors())
+
 app.use(express.static('uploads'));
 
 // Middleware to parse JSON bodies
@@ -24,6 +35,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // character encoding
 app.use((req, res, next) => {
+    console.log("Request Headers:", req.headers);
     res.setHeader('Content-Type', 'application/json; charset=utf-8');
     next();
   });
@@ -64,8 +76,14 @@ app.get('/', (req, res) => {
     res.send('API Working')
 })
 
+// app.listen(port, () => {
+//     console.log(`Server started on http://localhost:${port}`)
+// })
+
+// const PORT = process.env.PORT || 4000;
+
 app.listen(port, () => {
-    console.log(`Server started on http://localhost:${port}`)
-})
+  console.log(`Server Listening on ${port}`);
+});
 
 // mongodb+srv://gyeongcheong23:OMIM5vasaz7gnC84@cluster0.d8iwxjc.mongodb.net/?

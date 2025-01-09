@@ -26,63 +26,78 @@ const CorrectionPageContent: React.FC = () => {
   const [allCorrect, setAllCorrect] = useState(false);
   const router = useRouter();
 
-  console.log();
-  console.log("Correction Page Content:");
-  console.log("URL:", url);
-  console.log("User Answer:", userAnswer);
-  console.log("Card Type:", cardType);
-  console.log("User ID:", userId);
-  console.log("File Storage Name:", fileStorageName);
+  const getTranscript = async () => {
+    try {
+      const response = await fetch(`http://localhost:4000/api/transcript?url=${encodeURIComponent(url)}`);
+      if (response.ok) {
+        const data = await response.json();
+        console.log("News Transcript Data:", data);
+        setTranscript(data.transcript || '');  // Ensure no undefined
+        initializeUserAnswer(data.transcript || '', userAnswerFromParams);
+      } else {
+        console.error('Error fetching transcript:', response.statusText);
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.error('Axios error:', error.response?.data || error.message);
+        console.log('Axios error:', error.response?.data || error.message);
+      } else {
+        console.error('Unexpected error:', error);
+        console.log('Unexpected error:', error);
+      }
+    }
+  };
+
+  const getAudioTranscript = async () => {
+    try {
+      const token = LocalStorage.getItem('token');
+      if (!token) {
+        console.error('Token is missing');
+        return;
+      }
+
+      console.log("Requesting transcript with:", {
+        url: `${apiUrl}/api/user/audio-transcript`,
+        token,
+        userId,
+        fileStorageName,
+      });
+
+      const response = await axios.get(`${apiUrl}/api/user/audio-transcript`, {
+        headers: {
+          'token': token,
+        },
+        params: {
+          userId,
+          fileStorageName,
+        },
+      });
+
+      console.log(response)
+
+      setTranscript(response.data.transcript || '');  // Ensure no undefined
+      initializeUserAnswer(response.data.transcript || '', userAnswerFromParams);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.error('Axios error:', error.response?.data || error.message);
+        console.log('Axios error:', error.response?.data || error.message);
+      } else {
+        console.error('Unexpected error:', error);
+        console.log('Unexpected error:', error);
+      }
+    } 
+  }
 
   useEffect(() => {
-    const getTranscript = async () => {
-      try {
-        if (url && cardType === 'news') {
-          const response = await fetch(`http://localhost:4000/api/transcript?url=${encodeURIComponent(url)}`);
-          if (response.ok) {
-            const data = await response.json();
-            console.log("News Transcript Data:", data);
-            setTranscript(data.transcript || '');  // Ensure no undefined
-            initializeUserAnswer(data.transcript || '', userAnswerFromParams);
-          } else {
-            console.error('Error fetching transcript:', response.statusText);
-          }
-        } else if (cardType === 'audio' && userId && fileStorageName) {
-          const token = LocalStorage.getItem('token');
-          if (!token) {
-            console.error('Token is missing');
-            return;
-          }
-  
-          console.log("Requesting transcript with:", {
-            url: `${apiUrl}/api/user/audio-transcript`,
-            token,
-            fileStorageName,
-          });
-  
-          const response = await axios.get(`${apiUrl}/api/user/audio-transcript`, {
-            headers: {
-              'token': token,
-            },
-            params: {
-              userId,
-              fileStorageName,
-            },
-          });
-  
-          setTranscript(response.data.transcript || '');  // Ensure no undefined
-          initializeUserAnswer(response.data.transcript || '', userAnswerFromParams);
-        } 
-      } catch (error) {
-        if (axios.isAxiosError(error)) {
-          console.error('Axios error:', error.response?.data || error.message);
-        } else {
-          console.error('Unexpected error:', error);
-        }
-      }
-    };
-    getTranscript();
+    if (cardType === 'news') {
+      getTranscript();
+      console.log(getTranscript)
+    } else if (cardType === 'audio') {
+      getAudioTranscript();
+      console.log(getAudioTranscript)
+    }
   }, [url, cardType, userId, fileStorageName]);
+  
   
 
   const initializeUserAnswer = (transcriptText: string, userAnswerText: string) => {
@@ -130,24 +145,9 @@ const CorrectionPageContent: React.FC = () => {
     setCorrectedWords(newCorrectedWords);
   };
 
-  const normalizeTranscript = (transcriptText: string) => {
-    return transcriptText
-      .replace(/(\d+\.\n)/g, '')  // Remove question numbers (e.g., "1.\n")
-      .replace(/\([A-D]\)\s*/g, '')  // Remove option letters (e.g., "(A) ")
-      .replace(/[().]/g, '')    // Remove special characters like parentheses and periods
-      .replace(/\n/g, ' ')      // Replace newline characters with spaces
-      .trim()                   // Trim any leading/trailing whitespace
-      .split(/\s+/);            // Split by any whitespace (spaces, newlines, etc.)
-  };
-
   const renderUserAnswer = () => {
-    // const userAnswerWords = userAnswer.split(' ');
-    // const transcriptWords = transcript.split(' ');
-    // console.log('Rendering user answer:', userAnswer);
-    // console.log('Rendering transcript:', transcript);
-
-    const userAnswerWords = normalizeTranscript(userAnswer);
-    const transcriptWords = normalizeTranscript(transcript);
+    const userAnswerWords = userAnswer.split(' ');
+    const transcriptWords = transcript.split(' ');
 
     return transcriptWords.map((word, index) => {
       const isEditable = editableIndexes.includes(index);

@@ -24,7 +24,7 @@ const loginAdmin = async (req,res) => {
         }
 
         // CREATE TOKEN IF PASSWORD MATCHES
-        const token = createToken(admin._id);
+        const token = createToken(admin._id, admin.email);
         res.json({success:true, token, name, email});
     } catch (error) {
         console.log(error);
@@ -33,10 +33,10 @@ const loginAdmin = async (req,res) => {
 }
 
 // REGISTER ADMIN
-const registerAdmin = async (req, res) => {
-    const { adminname, email, password, mobilenumber, address, institute, group } = req.body;
-    
+const registerAdmin = async (req, res) => {    
     try {
+        const { adminname, email, password, mobilenumber, address, institute, group } = req.body;
+
         // Access uploaded files
         const studentlistFile = req.files['studentlist'] ? req.files['studentlist'][0] : null;
         const groupadminFile = req.files['groupadmin'] ? req.files['groupadmin'][0] : null;
@@ -116,7 +116,7 @@ const registerAdmin = async (req, res) => {
 const parseCSVFile = async (filePath) => {
     const results = [];
     return new Promise((resolve, reject) => {
-        fs.createReadStream(filePath)
+        fs.createReadStream(filePath, {encoding: 'utf-8'})
             .pipe(csv())
             .on('data', (originalData) => {
                 const correctedData = {};
@@ -151,6 +151,8 @@ const registerUsers = async (users, group) => {
                 address: user.address,
                 institute: user.institute,
                 group: group,
+                Image: user.image,
+                audioList: []
             });
             await newUser.save();
         } catch (error) {
@@ -174,6 +176,9 @@ const registerAdmins = async (admins, institute) => {
                 registerDate: new Date().toISOString(),
                 institute: institute,
                 group: admin.group,
+                studentlist: [],
+                studentnumber: 0,
+                groupadmin: []
             });
             await newAdmin.save();
         } catch (error) {

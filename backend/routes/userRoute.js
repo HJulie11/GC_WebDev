@@ -123,7 +123,8 @@ userRouter.post('/upload-transcript', authMiddleware, async (req, res) => {
 // });
 
 userRouter.get('/audio-transcript', authMiddleware, async (req, res) => {
-  const { userId, fileStorageName } = req.query;
+  const userId = req.body.userId;
+  const fileStorageName = req.query.fileStorageName;
 
   console.log('Received userId:', userId);
   console.log('Received fileStorageName:', fileStorageName);
@@ -140,7 +141,7 @@ userRouter.get('/audio-transcript', authMiddleware, async (req, res) => {
     }
 
     // const audioFile = user.audioList.find(audio => audio.fileStorageName === fileStorageName);
-    const audioFile = user.audioList.find(fileStorageName);
+    const audioFile = user.audioList.find(audio => audio.fileStorageName === fileStorageName);
     console.log('Audio file:', audioFile);
     if (!audioFile) {
       console.error('Audio file not found');
@@ -148,7 +149,7 @@ userRouter.get('/audio-transcript', authMiddleware, async (req, res) => {
     }
 
     console.log('Transcript:', audioFile.transcript); // Log the transcript
-    res.json({ transcript: audioFile.transcript });
+    res.status(200).json({ success: true, transcript: audioFile.transcript });
   } catch (error) {
     console.error('Error fetching audio transcript:', error);
     res.status(500).json({ message: 'Server error', error });
